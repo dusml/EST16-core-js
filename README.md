@@ -1,7 +1,7 @@
 # JavaScript 기초 학습 노트
 
 EST 16기 수업에서 배운 JavaScript의 핵심 개념과 실습 코드를 정리하는 공간입니다.
-변수와 자료형부터 연산자, 조건문, 반복문, 함수까지 직접 실행해 보며 동작 원리를 익힙니다.
+변수와 자료형부터 연산자, 조건문, 반복문, 함수, 객체까지 직접 실행해 보며 동작 원리를 익힙니다.
 
 ## 목차
 
@@ -31,6 +31,10 @@ EST 16기 수업에서 배운 JavaScript의 핵심 개념과 실습 코드를 �
 | 20 | [함수 표현식과 콜백](#20-함수-표현식과-콜백) | `arguments`, 배열 변환, `reduce`, 콜백, IIFE |
 | 21 | [화살표 함수와 this](#21-화살표-함수와-this) | 화살표 함수, 나머지 매개변수, `this`, 메서드 축약형 |
 | 22 | [재귀 함수와 실행 컨텍스트](#22-재귀-함수와-실행-컨텍스트) | 종료 조건, 재귀 단계, 호출 스택, 메모이제이션 |
+| 23 | [객체 속성과 구조 분해 할당](#23-객체-속성과-구조-분해-할당) | 프로퍼티, 단축 구문, 구조 분해, 타입 확인 |
+| 24 | [객체 참조와 복사](#24-객체-참조와-복사) | 참조, 얕은 복사, 병합, 깊은 복사 |
+| 25 | [가비지 컬렉션](#25-가비지-컬렉션) | 도달 가능성, 참조, 메모리 관리 |
+| 26 | [객체 메서드와 this](#26-객체-메서드와-this) | 호출 방식, 메서드 축약형, 화살표 함수 |
 
 [키워드로 찾아보기](#키워드로-찾아보기) · [복습 질문](#복습-질문) · [실습 실행 방법](#실습-실행-방법)
 
@@ -64,6 +68,11 @@ EST 16기 수업에서 배운 JavaScript의 핵심 개념과 실습 코드를 �
 | 객체 메서드와 콜백에서 this 사용하기 | [화살표 함수와 this](#21-화살표-함수와-this) |
 | 재귀의 종료 조건과 함수 호출 스택 | [재귀 함수와 실행 컨텍스트](#22-재귀-함수와-실행-컨텍스트) |
 | 피보나치 계산 결과 재사용, `memoFibo`와 캐시 | [메모이제이션](#메모이제이션과-memofibo) |
+| 객체 속성 접근, 단축 프로퍼티, 구조 분해와 별칭 | [객체 속성과 구조 분해 할당](#23-객체-속성과-구조-분해-할당) |
+| `typeOf`, `isObject` 등 타입 확인 유틸 함수 | [타입 확인 유틸 함수](#타입-확인-유틸-함수) |
+| 객체 참조, 얕은 복사와 깊은 복사, 병합 순서 | [객체 참조와 복사](#24-객체-참조와-복사) |
+| 도달할 수 없는 객체와 자동 메모리 관리 | [가비지 컬렉션](#25-가비지-컬렉션) |
+| 객체 메서드에서 일반 함수와 화살표 함수의 차이 | [객체 메서드와 this](#26-객체-메서드와-this) |
 
 ---
 
@@ -789,6 +798,194 @@ memoFibo.cache = {}
 
 ---
 
+## 23. 객체 속성과 구조 분해 할당
+
+학습 파일: [23.object-1.js](client/chapter/core/23.object-1.js)
+
+### 프로퍼티 접근과 단축 구문
+
+- 객체는 키와 값의 쌍인 프로퍼티로 데이터를 묶습니다.
+- `obj.name`은 점 표기법, `obj[key]`는 대괄호 표기법입니다. 변수로 키를 지정하거나 하이픈·공백이 있는 이름에 접근할 때는 대괄호를 사용합니다.
+- `[표현식]`으로 프로퍼티 이름을 계산할 수 있습니다. 원본의 `['z-index']`처럼 문자열도 표현식으로 사용할 수 있습니다.
+- 변수 이름과 프로퍼티 이름이 같으면 `name: name`을 `name`으로 줄일 수 있습니다.
+- 예약어도 객체의 프로퍼티 이름으로 사용할 수 있습니다.
+
+원본에서는 다음 변수들을 단축 프로퍼티로 묶습니다.
+
+```js
+let name = '선범';
+let email = 'seonbeom2@euid.dev';
+let authorization = 'Lv. 99';
+let isLogin = true;
+
+const student = {
+  name,
+  email,
+  authorization,
+  isLogin,
+}
+```
+
+`Object.keys()`, `Object.values()`, `Object.entries()`는 객체 자신의 열거 가능한 문자열 키를 기준으로 배열을 반환합니다. 원본의 `getKeys()`는 `Object.hasOwn()`으로 자신의 속성만 추립니다. `getValues()`와 `getEntries()`는 이 검사가 없어 상속받은 열거 가능한 속성도 포함할 수 있습니다.
+
+`removeProperty()`는 이름과 달리 프로퍼티를 삭제하지 않고 `obj[key] = null`로 값을 비웁니다. 프로퍼티 자체를 없애는 `delete obj[key]`와 구분합니다.
+
+### 배열과 객체 구조 분해 할당
+
+배열은 순서대로 값을 꺼냅니다. 항목을 건너뛰려면 해당 자리를 비워 둡니다.
+
+```js
+const arr = [10,100,1000, 10_000, 100_000]
+const [a1,a2,a3] = arr;
+```
+
+위에서 `a1`, `a2`, `a3`는 각각 `10`, `100`, `1000`입니다. 배열 구조 분해는 이터러블에 사용할 수 있으며, 인덱스와 `length`만 있는 유사 배열이면 항상 가능한 것은 아닙니다.
+
+객체는 순서 대신 프로퍼티 이름으로 값을 찾습니다. `키:별칭`으로 변수 이름을 바꿀 수 있고, 값이 `undefined`일 때 사용할 기본값을 지정할 수 있습니다.
+
+```js
+const salaries = {
+  이소망 : 330,
+  박소연: 550,
+  이유정: 130,
+  김효경: 60
+}
+
+const { 이소망, 박소연:카페알바생, 이유경, 김효경, 신재훈 = 30 } = salaries;
+```
+
+`이소망`은 `330`, `카페알바생`은 `550`, `신재훈`은 `30`입니다. 원본의 `이유경`은 객체의 키 `이유정`과 이름이 달라 `undefined`가 됩니다. 별칭을 사용한 `박소연` 값은 `카페알바생`이라는 변수에 담깁니다.
+
+`createUserObject()`는 인수 객체에서 필요한 프로퍼티를 구조 분해한 뒤, 단축 프로퍼티로 새 객체를 만들어 반환합니다.
+
+### 타입 확인 유틸 함수
+
+관련 파일: [type.js](client/lib/utils/type.js)
+
+```js
+const typeOf = d => Object.prototype.toString.call(d).slice(8,-1).toLowerCase()
+
+const isObject = d => typeOf(d) === 'object';
+const isArray = d => typeOf(d) === 'array';
+```
+
+`Object.prototype.toString`을 빌려 호출한 결과에서 타입 이름을 꺼냅니다. 예를 들어 `'[object Array]'`에서 `'array'`를 얻습니다. `typeof`가 배열과 `null`을 모두 `'object'`로 나타내는 것과 달리 구분할 수 있습니다.
+
+원본에는 문자열, 숫자, 불리언, BigInt, `null`, `undefined`, 함수, `Math`를 확인하는 함수도 있습니다. `isObject()`는 이 유틸의 기준에서 타입 이름이 `'object'`인지 확인하며, 배열 등 모든 객체를 포괄하는 검사는 아닙니다. `23.object-1.js`의 `removeProperty()`를 호출하려면 이 유틸 파일을 먼저 연결합니다.
+
+[↑ 목차로 돌아가기](#목차)
+
+---
+
+## 24. 객체 참조와 복사
+
+학습 파일: [24.object-2.js](client/chapter/core/24.object-2.js)
+
+### 값 복사와 객체 참조
+
+원시값을 다른 변수에 할당하면 값이 복사됩니다. 객체를 할당하면 같은 객체를 가리키는 참조가 복사됩니다.
+
+```js
+let message = '문자 값은 프리미티브 데이터 타입으로 값이 복사됩니다.';
+let messenger = {
+  name: 'kakao talk',
+  manufacture: 'kakao'
+};
+
+let text = message;
+let conversationTool = messenger;
+```
+
+원본의 `message === text`와 `messenger === conversationTool`은 모두 `true`입니다. 다만 객체 비교는 내용이 같은지를 비교하는 것이 아니라 같은 객체를 참조하는지 비교합니다. `conversationTool`을 통해 속성을 변경하면 `messenger`에서도 그 변경이 보입니다.
+
+### 얕은 복사와 객체 병합
+
+```js
+const copyObject = Object.assign({},messenger)
+const spreadObject = {...messenger}
+```
+
+두 방식은 새 객체에 속성을 옮기는 얕은 복사입니다. 최상위 객체는 분리되지만 중첩된 객체의 참조는 공유합니다. `Object.assign()`은 첫 번째 인수인 대상 객체를 변경하므로 새 객체에 복사하려면 `{}`를 대상으로 전달합니다.
+
+원본의 `Object.assign({},cssMapA, cssMapB)`는 두 스타일 객체를 병합합니다. 키가 겹치면 뒤의 값이 덮어쓰므로 `color`는 `cssMapB`의 `'#3f9e97'`가 됩니다.
+
+파일 앞의 수동 복사 부분은 주석에 `for...in`이라고 적혀 있지만 실제 코드는 `for(const key of messenger)`입니다. 일반 객체인 `messenger`는 이터러블이 아니므로 여기에서 `TypeError`가 발생하고, 뒤의 복사 예제도 실행되지 않습니다. 키 순회에는 `for...in` 또는 `Object.keys()` 등을 사용해야 합니다.
+
+### 중첩 객체 복사
+
+원본에서는 `containerStyles`와 중첩된 `'max-width'` 객체를 각각 전개하여 복사합니다.
+
+```js
+let copiedContainerStyles = {
+  ...containerStyles,
+  ['max-width']: {
+    ...containerStyles['max-width']
+  }
+};
+```
+
+이 예제의 중첩 수준에서는 `'max-width'`도 분리됩니다. 더 깊은 객체가 있다면 그 수준도 별도로 복사해야 합니다.
+
+`cloneDeep()`은 `Object.entries()`로 키와 값을 꺼내고, 값이 `null`이 아닌 객체이면 재귀적으로 복사한 뒤 `Object.fromEntries()`로 객체를 만듭니다. 현재의 일반 중첩 객체 예제에는 사용할 수 있지만, 배열도 일반 객체로 바뀌며 순환 참조나 `Date` 같은 특수 객체를 처리하는 범용 함수는 아닙니다. 파일 끝에는 Lodash의 `_.cloneDeep()`을 활용하는 방법도 메모되어 있습니다.
+
+[↑ 목차로 돌아가기](#목차)
+
+---
+
+## 25. 가비지 컬렉션
+
+학습 파일: [25.object-3.js](client/chapter/core/25.object-3.js)
+
+JavaScript 엔진은 가비지 컬렉터(Garbage Collector)를 통해 메모리를 자동으로 관리합니다. 핵심 기준은 **도달 가능성(reachability)**입니다. 실행 중인 코드나 전역 변수 등에서 참조를 따라 접근할 수 있는 값은 도달 가능한 값입니다.
+
+```js
+const memoizedObject = {
+  name: '메모리에 기억된 객체',
+};
+```
+
+원본의 객체는 `memoizedObject`가 참조하고 있는 동안 도달 가능합니다. 더 이상 접근할 수 있는 참조가 없어진 객체는 가비지 컬렉션의 대상이 됩니다. 참조가 끊겼다고 즉시 메모리가 회수되는 것은 아니며, 회수 시점은 엔진이 관리합니다.
+
+`const`로 선언한 변수에는 `null`을 재할당할 수 없습니다. 또한 객체의 속성을 삭제하거나 비우는 것과 객체 자체에 대한 모든 참조가 사라지는 것은 다릅니다. 다른 변수가 같은 객체를 참조하고 있다면 그 경로로 여전히 접근할 수 있습니다.
+
+[↑ 목차로 돌아가기](#목차)
+
+---
+
+## 26. 객체 메서드와 this
+
+학습 파일: [26.object-4.js](client/chapter/core/26.object-4.js)
+
+메서드는 객체의 프로퍼티에 저장된 함수입니다. 일반 함수 메서드의 `this`는 함수가 정의된 객체로 고정되는 것이 아니라 호출 방식에 따라 실행 중에 결정됩니다.
+
+원본의 내비게이션 예제:
+
+```js
+const navigationMenu = {
+  name: '글로벌 내비게이션',
+  items: [
+    { id: 'link-g', text: 'Google', link: 'https://google.com' },
+    { id: 'link-n', text: 'Naver', link: 'https://naver.com' },
+  ],
+  getItem(index) {
+    return this.items[index];
+  },
+  addItem: (newItem) => {
+    this.items.push(newItem);
+  },
+};
+```
+
+- `getItem(index) { ... }`는 메서드 축약형입니다. `navigationMenu.getItem(0)`으로 호출하면 `this`는 `navigationMenu`이고 Google 항목을 반환합니다.
+- 메서드를 다른 변수에 담아 단독 호출하면 원래 객체와의 연결이 유지되지 않으므로 `this`가 달라질 수 있습니다.
+- `addItem`은 화살표 함수이므로 객체 자신의 `this`를 바인딩하지 않습니다. 현재의 브라우저 일반 스크립트에서는 바깥의 전역 `this`를 사용합니다.
+
+따라서 현재 예제의 `addItem()`을 호출하면 `navigationMenu.items`에 접근하지 못하며, 전역 `this.items`가 없다면 `TypeError`가 발생합니다. 객체의 항목을 추가하는 메서드는 `getItem`처럼 메서드 축약형이나 일반 함수 표현식으로 작성해야 호출 대상의 `this`를 사용할 수 있습니다.
+
+[↑ 목차로 돌아가기](#목차)
+
+---
+
 ## 복습 질문
 
 - `let`, `const`, `var`는 재할당과 스코프에서 어떤 차이가 있을까?
@@ -820,6 +1017,15 @@ memoFibo.cache = {}
 - 재귀 호출에서 기다리던 함수들은 어떤 순서로 실행을 이어갈까?
 - `memoFibo(n)` 호출과 `memoFibo.cache[n]` 접근은 어떤 차이가 있을까?
 - 메모이제이션은 계산 시간을 줄이는 대신 어떤 데이터를 저장할까?
+- 점 표기법과 대괄호 표기법은 어떤 상황에서 사용할까?
+- 배열과 객체의 구조 분해 할당은 각각 무엇을 기준으로 값을 찾을까?
+- 객체 구조 분해에서 별칭과 기본값은 어떤 역할을 할까?
+- 객체의 값을 `null`로 바꾸는 것과 `delete`는 어떻게 다를까?
+- 객체 참조를 복사하는 것과 얕은 복사는 어떻게 다를까?
+- 얕게 복사한 객체의 중첩 객체를 수정하면 원본에도 영향을 줄까?
+- 여러 객체를 병합할 때 같은 키의 값은 어느 객체를 따를까?
+- 객체가 가비지 컬렉션의 대상이 되는 기준은 무엇일까?
+- `navigationMenu`의 `getItem`과 `addItem`은 `this`를 어떻게 다르게 사용할까?
 
 [↑ 목차로 돌아가기](#목차)
 
@@ -838,11 +1044,12 @@ npm run dev
 [client/index.html](client/index.html)의 스크립트 경로를 바꿔 원하는 예제를 실행합니다.
 
 ```html
-<script src="./chapter/core/22.function-4.js" defer></script>
+<script src="./lib/utils/type.js" defer></script>
+<script src="./chapter/core/26.object-4.js" defer></script>
 ```
 
 학습 파일은 한 번에 하나씩 연결합니다. 함수 선언만 있는 예제는 콘솔에서 직접 호출하고, 주석 처리된 예제는 필요한 부분을 해제하며 결과를 확인합니다.
 
-현재 `client/index.html`에는 22번 원본 파일이 연결되어 있습니다. 화살표 함수 예제는 `21.function-3.js`로 경로를 바꿔 실행합니다. DOM을 사용하는 19번 실습은 `defer`를 유지하고, `client/index.html`의 `.first`, `.second` 요소를 대상으로 스타일 조회·변경 결과를 확인합니다.
+현재 `client/index.html`에는 타입 확인 유틸 파일과 26번 원본 파일이 순서대로 연결되어 있습니다. 다른 수업을 실행하려면 두 번째 스크립트 경로를 원하는 학습 파일로 바꿉니다. 23번의 `removeProperty()`처럼 타입 확인 함수를 사용하는 예제는 유틸 파일을 먼저 연결해야 합니다. DOM을 사용하는 19번 실습은 `defer`를 유지하고, `client/index.html`의 `.first`, `.second` 요소를 대상으로 스타일 조회·변경 결과를 확인합니다.
 
 [↑ 목차로 돌아가기](#목차)

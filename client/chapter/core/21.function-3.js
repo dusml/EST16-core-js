@@ -50,7 +50,7 @@ calcAllMoney(1000,2000, 3000, 4000, 5000, 6000); */
 //이렇게 하면 앞에 값을 뺀 나머지 값이 배열로 들어간다.
 let calcAllMoney = (...rest) => {
 
-  // const first = args[0]
+  // const first = rest[0]
 
   console.log(rest)
   
