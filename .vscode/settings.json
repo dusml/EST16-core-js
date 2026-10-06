@@ -1,6 +1,12 @@
 {
-  "editor.tokenColorCustomizations": {
-    "comments": "",
-    "textMateRules": []
-  }
+    "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "comment",
+        "settings": {
+          "foreground": "#bdbf7b93",
+        },
+      },
+    ],
+  },
 }
