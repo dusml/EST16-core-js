@@ -10,10 +10,27 @@ const shopOrder = {
     { name: '통 새우 돈까스', price: 13000, count: 2 },
     { name: '치즈 돈까스', price: 10000, count: 1 },
   ],
+  totalPrice(){
+    // this.menu.forEach((item) => {
+    //   this.total += item.price * item.count
+    // })
+
+    this.total = this.menu.reduce((acc, cur) => acc + cur.price * cur.count,0);
+  }
 };
 
 //메서드 없이
 //menu안에 있는 product price 총 합 ???
+
+console.log(
+  shopOrder.menu[0].price * shopOrder.menu[0].count + shopOrder.menu[1].price * shopOrder.menu[1].count 
+);
+
+
+let total = 0;
+shopOrder.menu.forEach(item => total += item.price * item.count)
+
+total = shopOrder.menu.reduce((acc,cur) => acc + cur.price * cur.count,0)
 
 /*
 1. 메서드 없이 menu 안에 있는 product price의 총 합을 콘솔에 출력하세요.
@@ -54,7 +71,9 @@ const navigationMenu = {
   getItem(index) {
     return this.items[index];
   },
-  addItem: (newItem) => {
+  addItem(newItem) {
     this.items.push(newItem);
   },
 };
+
+//this가 가리키는게 네비게이션메뉴가 아니에요.. 그래서 화살표 함수를 다른 함수로 바꾸었다.

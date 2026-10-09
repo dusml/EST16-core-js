@@ -1,7 +1,7 @@
 # JavaScript 기초 학습 노트
 
 EST 16기 수업에서 배운 JavaScript의 핵심 개념과 실습 코드를 정리하는 공간입니다.
-변수와 자료형부터 연산자, 조건문, 반복문, 함수, 객체까지 직접 실행해 보며 동작 원리를 익힙니다.
+변수와 자료형부터 연산자, 조건문, 반복문, 함수, 객체, 상속, 클로저와 숫자·문자열 메서드까지 직접 실행해 보며 동작 원리를 익힙니다.
 
 ## 목차
 
@@ -35,6 +35,14 @@ EST 16기 수업에서 배운 JavaScript의 핵심 개념과 실습 코드를 �
 | 24 | [객체 참조와 복사](#24-객체-참조와-복사) | 참조, 얕은 복사, 병합, 깊은 복사 |
 | 25 | [가비지 컬렉션](#25-가비지-컬렉션) | 도달 가능성, 참조, 메모리 관리 |
 | 26 | [객체 메서드와 this](#26-객체-메서드와-this) | 호출 방식, 메서드 축약형, 화살표 함수 |
+| 27 | [프로토타입 상속과 생성자 함수](#27-프로토타입-상속과-생성자-함수) | 프로토타입 체인, 접근자, new, call·apply·bind |
+| 28 | [클래스와 상속](#28-클래스와-상속) | class, constructor, extends, super, 비공개 필드, static |
+| 29 | [클로저와 커링](#29-클로저와-커링) | 렉시컬 환경, 독립적인 카운터, 함수 반환 |
+| 30 | [클로저로 상태 관리하기](#30-클로저로-상태-관리하기) | 이벤트 핸들러, IIFE, 상태 읽기·쓰기 |
+| 31 | [옵셔널 체이닝과 브라우저 타이머](#31-옵셔널-체이닝과-브라우저-타이머) | `?.`, `setTimeout`, `setInterval`, 애니메이션 |
+| 32 | [원시값 메서드와 래퍼 객체](#32-원시값-메서드와-래퍼-객체) | 원시값, 자동 래핑, `split` |
+| 33 | [숫자 표현과 Math](#33-숫자-표현과-math) | 숫자 구분자, 지수 표기, 어림수, 난수, 진법 |
+| 34 | [문자열 메서드](#34-문자열-메서드) | 불변성, 추출, 검색, 공백 제거, 반복 |
 
 [키워드로 찾아보기](#키워드로-찾아보기) · [복습 질문](#복습-질문) · [실습 실행 방법](#실습-실행-방법)
 
@@ -73,6 +81,14 @@ EST 16기 수업에서 배운 JavaScript의 핵심 개념과 실습 코드를 �
 | 객체 참조, 얕은 복사와 깊은 복사, 병합 순서 | [객체 참조와 복사](#24-객체-참조와-복사) |
 | 도달할 수 없는 객체와 자동 메모리 관리 | [가비지 컬렉션](#25-가비지-컬렉션) |
 | 객체 메서드에서 일반 함수와 화살표 함수의 차이 | [객체 메서드와 this](#26-객체-메서드와-this) |
+| 상속된 속성 탐색, getter·setter, 생성자와 this 지정 | [프로토타입 상속과 생성자 함수](#27-프로토타입-상속과-생성자-함수) |
+| 클래스 필드, 부모 생성자 호출, 비공개 필드와 정적 메서드 | [클래스와 상속](#28-클래스와-상속) |
+| 함수가 외부 변수를 기억하기, 독립적인 카운터와 커링 | [클로저와 커링](#29-클로저와-커링) |
+| 클릭 상태 유지하기, 상태를 읽고 변경하는 함수 | [클로저로 상태 관리하기](#30-클로저로-상태-관리하기) |
+| 없는 속성과 메서드에 접근하기, 타이머와 애니메이션 | [옵셔널 체이닝과 브라우저 타이머](#31-옵셔널-체이닝과-브라우저-타이머) |
+| 원시값에서 메서드를 사용할 수 있는 이유 | [원시값 메서드와 래퍼 객체](#32-원시값-메서드와-래퍼-객체) |
+| 반올림·내림·절삭, 범위 내 난수와 진법 변환 | [숫자 표현과 Math](#33-숫자-표현과-math) |
+| 문자열 자르기, 포함 여부 확인, 공백 제거와 반복 | [문자열 메서드](#34-문자열-메서드) |
 
 ---
 
@@ -830,6 +846,8 @@ const student = {
 
 `removeProperty()`는 이름과 달리 프로퍼티를 삭제하지 않고 `obj[key] = null`로 값을 비웁니다. 프로퍼티 자체를 없애는 `delete obj[key]`와 구분합니다.
 
+추가된 주석 예제에서는 `getKeys(obj, excludes)`가 `Object.hasOwn()`과 `excludes.includes(key)`로 자신의 속성 중 제외 목록에 없는 키만 모읍니다. `getValues()`와 `getEntries()`에도 자신의 속성만 모으는 대안이 주석으로 추가되어 있습니다.
+
 ### 배열과 객체 구조 분해 할당
 
 배열은 순서대로 값을 꺼냅니다. 항목을 건너뛰려면 해당 자리를 비워 둡니다.
@@ -857,6 +875,8 @@ const { 이소망, 박소연:카페알바생, 이유경, 김효경, 신재훈 = 
 `이소망`은 `330`, `카페알바생`은 `550`, `신재훈`은 `30`입니다. 원본의 `이유경`은 객체의 키 `이유정`과 이름이 달라 `undefined`가 됩니다. 별칭을 사용한 `박소연` 값은 `카페알바생`이라는 변수에 담깁니다.
 
 `createUserObject()`는 인수 객체에서 필요한 프로퍼티를 구조 분해한 뒤, 단축 프로퍼티로 새 객체를 만들어 반환합니다.
+
+DOM 실습은 `document.querySelectorAll('span')`의 결과를 `[first, second, third]`로 구조 분해하고, 두 번째 요소를 클릭하면 일반 함수 핸들러의 `this.style.color`를 `'orange'`로 변경합니다. 현재 HTML에는 `span`이 없으므로 이 파일을 실행하려면 최소 두 개의 `span` 요소를 준비해야 합니다. 그렇지 않으면 `second.addEventListener()`에서 오류가 발생합니다.
 
 ### 타입 확인 유틸 함수
 
@@ -970,7 +990,7 @@ const navigationMenu = {
   getItem(index) {
     return this.items[index];
   },
-  addItem: (newItem) => {
+  addItem(newItem) {
     this.items.push(newItem);
   },
 };
@@ -978,9 +998,340 @@ const navigationMenu = {
 
 - `getItem(index) { ... }`는 메서드 축약형입니다. `navigationMenu.getItem(0)`으로 호출하면 `this`는 `navigationMenu`이고 Google 항목을 반환합니다.
 - 메서드를 다른 변수에 담아 단독 호출하면 원래 객체와의 연결이 유지되지 않으므로 `this`가 달라질 수 있습니다.
-- `addItem`은 화살표 함수이므로 객체 자신의 `this`를 바인딩하지 않습니다. 현재의 브라우저 일반 스크립트에서는 바깥의 전역 `this`를 사용합니다.
+- `addItem`도 메서드 축약형으로 변경되었습니다. `navigationMenu.addItem(newItem)`으로 호출하면 `this.items`에 새 항목을 추가합니다.
 
-따라서 현재 예제의 `addItem()`을 호출하면 `navigationMenu.items`에 접근하지 못하며, 전역 `this.items`가 없다면 `TypeError`가 발생합니다. 객체의 항목을 추가하는 메서드는 `getItem`처럼 메서드 축약형이나 일반 함수 표현식으로 작성해야 호출 대상의 `this`를 사용할 수 있습니다.
+화살표 함수는 바깥 스코프의 `this`를 사용하므로, 호출 대상 객체의 속성을 사용하는 메서드는 일반 함수나 메서드 축약형으로 작성합니다.
+
+주문 실습에서는 직접 항목에 접근하는 방식, `forEach()`, `reduce()`로 `price * count`의 합계를 구합니다. `shopOrder.totalPrice()`는 `reduce(..., 0)`의 결과를 `this.total`에 저장합니다. 현재 메뉴의 합계는 `36_000`이며, 호출할 때마다 합계를 새로 계산하므로 중복 누적되지 않습니다.
+
+[↑ 목차로 돌아가기](#목차)
+
+---
+
+## 27. 프로토타입 상속과 생성자 함수
+
+학습 파일: [27.prototype-1.js](client/chapter/core/27.prototype-1.js)
+
+### 프로토타입 체인과 접근자
+
+객체에서 속성을 찾을 때 자신의 속성에 없으면 프로토타입을 따라 탐색합니다. 원본에서는 백두산호랑이 → tiger → animal 순서로 연결합니다.
+
+```js
+const animal = {
+  legs:4,
+  tail:true,
+  get eat(){
+    return this.stomach //리턴이 없으면 에러가 난다.
+  },
+  set eat(food){ //매개변수를 작성 안하면 오류가 난다.
+    this.stomach = []; //빈 배열이 있어야 한다.
+    this.stomach.push(food)
+  }
+}
+
+/* Object.defineProperty(animal, 'sleep', {
+  get() {
+    return true;
+  },
+
+  enumerable: false
+}); */
+
+const tiger = {
+  pattern : '호랑이 무늬',
+  hunt(target){
+    this.prey = target;
+    this.eat = this.prey;
+    return `${target}에게 조용히 접근 후 먹는다.`
+  },
+  __proto__:animal
+}
+
+const 백두산호랑이 = {
+  name: '백돌이',
+  color: 'white',
+  __proto__: tiger,
+};
+
+// 백두산호랑이 __proto__: tiger
+```
+
+- 백두산호랑이는 자신의 name과 color뿐 아니라 tiger의 hunt, animal의 legs와 tail에도 접근할 수 있습니다.
+- 객체 리터럴의 __proto__: animal은 새 객체의 프로토타입을 animal로 지정합니다. 객체의 내부 프로토타입과 생성자 함수의 .prototype 속성은 구분합니다.
+- get eat()은 속성을 읽을 때, set eat(food)는 값을 할당할 때 실행되는 접근자입니다. getter는 인수를 받지 않고 setter는 하나의 인수를 받습니다.
+- 백두산호랑이.hunt('토끼')처럼 호출하면 상속된 메서드와 접근자에서도 this는 호출 대상인 백두산호랑이입니다. prey와 stomach가 그 객체에 저장됩니다.
+- 현재 setter는 할당할 때마다 stomach를 새 배열로 만들므로 이전 먹이는 남지 않습니다. stomach가 아직 없으면 getter는 undefined를 반환합니다.
+
+### 생성자 함수와 new
+
+원본의 Animal()은 this에 legs, tail, getEat, setEat을 설정합니다. new Animal()은 새 객체를 만들고 그 객체를 this로 하여 생성자 함수를 실행합니다.
+
+```js
+function Tiger(name) {
+  Animal.call(this)
+
+  this.name = name;
+  this.pattern = '호랑이무늬';
+
+  this.hunt = function (target) {
+    this.prey = target;
+    return `${target}에게 조용히 접근합니다.`;
+  };
+}
+
+const _animal = new Animal();
+
+// Tiger.prototype = _animal
+
+const _tiger = new Tiger('호돌이')
+
+Tiger.brak = function(sound){
+  return sound;
+}
+```
+
+Animal.call(this)는 Tiger가 생성 중인 객체에 Animal의 초기화 코드를 실행합니다. 이것만으로 Tiger.prototype과 Animal.prototype이 연결되는 것은 아닙니다. 원본의 Tiger.prototype = _animal은 주석 상태이므로 실행되지 않습니다.
+
+이 예제의 getEat, setEat, hunt는 생성할 때마다 각 인스턴스에 저장됩니다. 반면 Tiger.brak은 생성자 함수 자체에 붙인 함수이므로 Tiger.brak('어흥')으로 호출합니다. 원본의 이름은 bark가 아닌 brak입니다.
+
+### call, apply, bind
+
+| 메서드 | 실행 시점 | 인수 전달 방식 |
+| --- | --- | --- |
+| call(thisArg, a, b) | 즉시 실행 | 인수를 하나씩 전달 |
+| apply(thisArg, [a, b]) | 즉시 실행 | 배열 또는 유사 배열로 전달 |
+| bind(thisArg, a, b) | 나중에 호출할 새 함수 반환 | this와 인수를 미리 지정 |
+
+```js
+function sum(a,b){
+  return a + b;
+}
+
+//const a = sum.call('hello',1,2);
+//const a = sum.apply('hello',[1,2]);
+const a = sum.bind('hello',1,5);
+```
+
+현재 실행되는 bind는 합계를 즉시 계산하지 않습니다. a는 함수이며, a()를 호출하면 미리 지정한 1과 5를 더해 6을 반환합니다. call과 apply 예제는 주석 상태입니다.
+
+[↑ 목차로 돌아가기](#목차)
+
+---
+
+## 28. 클래스와 상속
+
+학습 파일: [28.prototype-2.js](client/chapter/core/28.prototype-2.js)
+
+class는 프로토타입을 기반으로 객체 생성과 상속을 표현하는 문법입니다. 원본에서는 앞의 생성자 함수 예제를 Animal과 Tiger 클래스로 다시 작성합니다.
+
+```js
+class Animal {
+
+  legs = 4; //클래스 필드
+  stomach = [];
+  tail = true;
+
+  // private field
+  #nickName = 'unknown';
+  //콘솔에서는 보여주는데, 개발을 할때는 들어 갈구 없다.
+
+  constructor(name) {
+    this.name = name;
+    console.log(this.#nickName);
+  }
+
+  get eat(){
+    return this.stomach;
+  }
+
+  set eat(food){
+    this.stomach.push(food)
+  }
+
+}
+
+const animal = new Animal('몽실이')
+
+class Tiger extends Animal{
+  //상속이 되어야 하는데...
+  constructor(name, pattern = '호랑이 무늬'){
+    super(name);
+
+    this.pattern = pattern;
+  }
+
+  hunt(target) {
+    this.prey = target;
+    return `${target}에게 조용히 접근한다.`;
+  }
+
+  static bark(sound){  //static이라고 정의하면 생성자만 사용가능
+    return sound
+  }
+}
+
+const tiger = new Tiger('호돌이');
+```
+
+### 클래스 필드와 생성자
+
+- legs, stomach, tail은 인스턴스마다 초기화되는 클래스 필드입니다. stomach 배열도 각 인스턴스가 별도로 가집니다.
+- constructor(name)는 new로 객체를 생성할 때 실행되며 this.name을 설정합니다. 원본은 생성할 때마다 비공개 필드의 값인 'unknown'도 출력합니다.
+- #nickName은 비공개 필드입니다. 클래스 외부에서 animal.#nickName처럼 직접 접근할 수 없고, 자식 클래스에서도 부모의 비공개 필드를 직접 사용할 수 없습니다.
+- getter와 setter는 프로퍼티처럼 읽고 할당합니다. 이 클래스의 setter는 기존 stomach에 push하므로 27번 예제와 달리 먹이를 누적합니다.
+
+### extends와 super
+
+Tiger extends Animal은 Animal을 상속합니다. Tiger 생성자의 super(name)는 부모 생성자를 호출하며, 자식 생성자에서는 this를 사용하기 전에 호출해야 합니다.
+
+new Tiger('호돌이')는 부모가 설정한 필드와 name을 가지며 pattern의 기본값은 '호랑이 무늬'입니다. tiger.hunt('토끼')는 prey를 설정하고 '토끼에게 조용히 접근한다.'를 반환합니다. 클래스 본문의 일반 메서드와 접근자는 프로토타입에 정의되어 인스턴스들이 공유합니다.
+
+### 인스턴스 메서드와 정적 메서드
+
+hunt는 tiger.hunt(...)처럼 인스턴스로 호출합니다. static bark는 Tiger.bark('어흥')처럼 클래스 자체로 호출하며 '어흥'을 반환합니다. tiger.bark(...)는 인스턴스 메서드가 아니므로 호출할 수 없습니다.
+
+[↑ 목차로 돌아가기](#목차)
+
+---
+
+## 29. 클로저와 커링
+
+학습 파일: [29.closure-1.js](client/chapter/core/29.closure-1.js)
+
+클로저는 함수와 그 함수가 만들어진 렉시컬 환경의 연결입니다. 반환된 내부 함수는 외부 함수의 실행이 끝난 뒤에도 외부 변수를 참조할 수 있습니다.
+
+- `const result = sum`은 함수를 호출하지 않고 함수 자체를 저장합니다.
+- `first()`가 반환하는 `second`는 외부의 `x`, `y`를 참조해 `30`을 반환합니다.
+- `counter()`가 반환하는 함수는 호출할 때마다 자신이 참조하는 `count`를 증가시킵니다. `c1`, `c2`, `c3`는 각각 독립적인 상태를 가집니다.
+- `_multi = (x) => (y) => x * y`는 인수를 단계별로 받는 커링 예제입니다.
+
+```js
+c1(); // 1
+c1(); // 2
+c2(); // 1
+_multi(2)(5); // 10
+```
+
+현재 일반 함수 버전인 `multi()`의 내부 함수에는 `return`이 없으므로 `double(5)`와 `triple(5)`는 `undefined`를 반환합니다. 곱셈 결과를 반환하려면 `return x * y`가 필요합니다.
+
+[↑ 목차로 돌아가기](#목차)
+
+---
+
+## 30. 클로저로 상태 관리하기
+
+학습 파일: [30.closure-2.js](client/chapter/core/30.closure-2.js)
+
+- `earth()`가 반환한 함수를 `UFO`에 저장합니다. `UFO()`는 외부 변수의 값인 `[true, 10]`을 반환합니다.
+- 즉시 실행 함수가 반환한 `handleClick`은 내부의 `isClicked`를 유지합니다. 버튼을 클릭할 때마다 배경색을 주황색과 기본값으로 전환합니다.
+- 클릭할 때마다 상태 변수를 새로 초기화하지 않고, 핸들러가 생성될 때 만든 변수를 계속 사용합니다.
+- `state(init)`는 같은 `value`를 참조하는 읽기 함수와 쓰기 함수를 배열로 반환합니다.
+
+```js
+const [read, write] = state('hello');
+read(); // 'hello'
+write('JavaScript');
+read(); // 'JavaScript'
+```
+
+원본의 `setValue()`는 인수 없이 호출되므로 내부 값이 `undefined`로 바뀝니다. 새 값을 저장하려면 인수를 전달합니다. 버튼 실습은 HTML의 `button` 요소가 필요하므로 `defer`를 유지합니다.
+
+[↑ 목차로 돌아가기](#목차)
+
+---
+
+## 31. 옵셔널 체이닝과 브라우저 타이머
+
+학습 파일: [31.optional.js](client/chapter/core/31.optional.js)
+
+### 옵셔널 체이닝
+
+- `portableFan.photos?.animate`는 `photos`가 없으면 `undefined`를 반환합니다. 실제 객체의 속성 이름은 `photo`입니다.
+- `portableFan.getFullName?.()`은 메서드가 `null` 또는 `undefined`가 아닐 때 호출합니다.
+- 동적 키에는 `obj?.[key]`를 사용할 수 있습니다.
+- `?.`는 `null`과 `undefined`를 검사합니다. 존재하는 값이 호출 가능한 함수가 아니라면 `?.()`도 오류를 발생시킵니다.
+
+### 타이머와 애니메이션
+
+| API | 실습 내용 |
+| --- | --- |
+| `setTimeout()` | 5초 뒤 `.btn` 버튼을 HTML에 추가 |
+| `setInterval()` | 1초 간격으로 콘솔 메시지 출력 |
+| `clearInterval()` | 주석 예제에서 반복 타이머 중단 |
+| `requestAnimationFrame()` | 다음 화면 갱신에 맞춰 버튼 이동·회전 |
+| `cancelAnimationFrame()` | 카운트가 300에 도달하면 다음 프레임 요청 취소 |
+
+타이머의 지연 시간은 콜백의 정확한 실행 시각을 보장하지 않습니다. 실행 중인 JavaScript가 오래 걸리면 콜백도 기다립니다.
+
+동적으로 생성되는 `.btn`은 생성 이후 다시 조회해야 합니다. 생성 전에 저장한 `button` 변수는 자동으로 갱신되지 않습니다. 현재 애니메이션은 HTML에 이미 있는 첫 번째 `button`을 대상으로 하며, 콘솔 출력용 인터벌은 별도로 계속 실행됩니다.
+
+[↑ 목차로 돌아가기](#목차)
+
+---
+
+## 32. 원시값 메서드와 래퍼 객체
+
+학습 파일: [32.primitive.js](client/chapter/core/32.primitive.js)
+
+문자열 같은 원시값은 객체가 아니지만 메서드와 프로퍼티를 사용할 수 있습니다. JavaScript가 접근 과정에서 래퍼 객체의 기능을 사용할 수 있도록 처리하기 때문입니다.
+
+```js
+const message = '원시 값은 객체가 아닙니다.';
+message.split(' '); // ['원시', '값은', '객체가', '아닙니다.']
+```
+
+`String`, `Number`, `Boolean` 등의 래퍼 기능을 통해 메서드에 접근할 수 있습니다. `null`과 `undefined`는 이러한 래핑을 제공하지 않으므로 직접 프로퍼티나 메서드에 접근하면 오류가 발생합니다.
+
+[↑ 목차로 돌아가기](#목차)
+
+---
+
+## 33. 숫자 표현과 Math
+
+학습 파일: [33.number.js](client/chapter/core/33.number.js)
+
+- `100_000_000`처럼 숫자 구분자 `_`로 가독성을 높일 수 있습니다.
+- `1e8`은 `100_000_000`, `1.45e6`은 `1_450_000`, `1e-6`은 `0.000001`입니다.
+- `Math.floor()`는 내림, `Math.round()`는 반올림, `Math.ceil()`은 올림, `Math.trunc()`는 소수 부분 제거입니다. 음수에서는 내림과 절삭의 결과가 다를 수 있습니다.
+- `Math.random()`은 0 이상 1 미만의 난수, `Math.max()`는 최댓값, `Math.pow()`는 거듭제곱을 구합니다.
+
+```js
+Math.floor(-1.5); // -2
+Math.trunc(-1.5); // -1
+Math.pow(2, 3); // 8
+
+const getRandomMinMax = (min, max) =>
+  Math.floor(Math.random() * (max - min) + min);
+getRandomMinMax(2, 10); // 2 이상 10 미만의 정수
+```
+
+난수 함수는 `min`, `max`가 정수이고 `min < max`인 범위를 기준으로 합니다. 진법 학습에는 `0x`(16진수), `0o`(8진수), `0b`(2진수), `parseInt(string, base)`, `number.toString(base)`가 소개되어 있습니다.
+
+`Math.min()` 활용과 `colorChip`의 RGB 값을 16진수로 바꾸고 되돌리는 부분은 아직 구현할 실습으로 남아 있습니다.
+
+[↑ 목차로 돌아가기](#목차)
+
+---
+
+## 34. 문자열 메서드
+
+학습 파일: [34.string.js](client/chapter/core/34.string.js)
+
+문자열은 불변이므로 특정 인덱스의 문자를 직접 바꾸지 않고 새 문자열을 만듭니다. 원본의 `'P' + message.slice(1)`도 원래 `message`를 변경하지 않습니다.
+
+| 프로퍼티·메서드 | 용도 | `'Less is more.'` 기준 예시 |
+| --- | --- | --- |
+| `length` | 문자열 길이 | `12` |
+| `charAt(5)` | 인덱스의 문자 추출 | `'i'` |
+| `slice(2, -1)` | 범위 추출, 음수 인덱스 지원 | `'ss is more'` |
+| `substring(2, 5)` | 시작부터 끝 인덱스 직전까지 추출 | `'ss '` |
+| `includes('is')` | 포함 여부 | `true` |
+| `startsWith('Less')` | 시작 문자열 확인 | `true` |
+| `endsWith('Less')` | 끝 문자열 확인 | `false` |
+| `trim()` | 앞뒤 공백 제거 | 원본에 앞뒤 공백이 없어 동일한 문자열 반환 |
+| `repeat(3)` | 지정 횟수 반복 | 원본 문자열을 세 번 이어 붙임 |
+
+`trim()`은 문자열 사이의 공백을 제거하지 않습니다. `indexOf`, `lastIndexOf`, 앞뒤 공백 제거, 대소문자 변환과 `toCamelCase`·`toPascalCase` 유틸 함수는 현재 변수만 선언된 실습 항목입니다.
 
 [↑ 목차로 돌아가기](#목차)
 
@@ -1025,7 +1376,24 @@ const navigationMenu = {
 - 얕게 복사한 객체의 중첩 객체를 수정하면 원본에도 영향을 줄까?
 - 여러 객체를 병합할 때 같은 키의 값은 어느 객체를 따를까?
 - 객체가 가비지 컬렉션의 대상이 되는 기준은 무엇일까?
-- `navigationMenu`의 `getItem`과 `addItem`은 `this`를 어떻게 다르게 사용할까?
+- `navigationMenu`의 `addItem`을 화살표 함수에서 메서드 축약형으로 바꾸면 `this`는 어떻게 달라질까?
+- 상속받은 메서드를 호출할 때 `this`는 어떤 객체를 가리킬까?
+- getter와 setter는 각각 언제 실행될까?
+- `Animal.call(this)`로 초기화하는 것과 프로토타입을 연결하는 것은 어떻게 다를까?
+- `call`, `apply`, `bind`는 실행 시점과 인수 전달 방식이 어떻게 다를까?
+- 자식 클래스의 생성자에서 `super()`는 언제 호출해야 할까?
+- 비공개 필드와 정적 메서드는 어디에서 접근할 수 있을까?
+- 외부 함수가 끝난 뒤에도 내부 함수가 외부 변수를 사용할 수 있는 이유는 무엇일까?
+- `counter()`를 여러 번 호출해서 만든 함수들은 상태를 공유할까?
+- 클로저 기반 클릭 핸들러는 상태를 어디에 저장할까?
+- `state()`의 읽기 함수와 쓰기 함수는 어떤 변수를 함께 참조할까?
+- 옵셔널 체이닝은 어떤 값에서 평가를 중단할까?
+- 동적 요소를 만들기 전에 조회한 변수는 생성 이후 자동으로 바뀔까?
+- 타이머와 애니메이션 반복을 중단하려면 어떤 API를 사용할까?
+- 원시값인 문자열에서 메서드를 사용할 수 있는 이유는 무엇일까?
+- 음수에 `Math.floor()`와 `Math.trunc()`를 적용하면 어떻게 다를까?
+- `getRandomMinMax(2, 10)`의 결과에 10이 포함될까?
+- 문자열 추출 메서드는 원본 문자열을 변경할까?
 
 [↑ 목차로 돌아가기](#목차)
 
@@ -1045,11 +1413,11 @@ npm run dev
 
 ```html
 <script src="./lib/utils/type.js" defer></script>
-<script src="./chapter/core/26.object-4.js" defer></script>
+<script src="./chapter/core/34.string.js" defer></script>
 ```
 
 학습 파일은 한 번에 하나씩 연결합니다. 함수 선언만 있는 예제는 콘솔에서 직접 호출하고, 주석 처리된 예제는 필요한 부분을 해제하며 결과를 확인합니다.
 
-현재 `client/index.html`에는 타입 확인 유틸 파일과 26번 원본 파일이 순서대로 연결되어 있습니다. 다른 수업을 실행하려면 두 번째 스크립트 경로를 원하는 학습 파일로 바꿉니다. 23번의 `removeProperty()`처럼 타입 확인 함수를 사용하는 예제는 유틸 파일을 먼저 연결해야 합니다. DOM을 사용하는 19번 실습은 `defer`를 유지하고, `client/index.html`의 `.first`, `.second` 요소를 대상으로 스타일 조회·변경 결과를 확인합니다.
+현재 `client/index.html`에는 타입 확인 유틸 파일과 34번 문자열 파일이 순서대로 연결되어 있습니다. 다른 수업을 실행하려면 두 번째 스크립트 경로를 원하는 학습 파일로 바꿉니다. 23번의 `removeProperty()`처럼 타입 확인 함수를 사용하는 예제는 유틸 파일을 먼저 연결해야 합니다. DOM을 사용하는 실습은 `defer`를 유지합니다. 19번은 `.first`, `.second`, 23번은 최소 두 개의 `span`, 30·31번은 `button` 요소가 필요합니다.
 
 [↑ 목차로 돌아가기](#목차)

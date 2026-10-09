@@ -75,6 +75,24 @@ function getKeys(obj){
   return arr;
 }
 
+/* 
+//제외하고 싶은 key는 빼고 반환하는 함수
+
+const keys = Object.keys(authUser);
+
+function getKeys(obj, excludes) {
+  let arr = [];
+
+  for (const key in obj) {
+    if (Object.hasOwn(obj, key) && !excludes.includes(key)) {
+      arr.push(key);
+    }
+  }
+
+  return arr;
+}ㅍ
+*/
+
 // 객체의 value들을 모아서 배열로 반환하는 함수
 
 function getValues(obj){
@@ -87,6 +105,20 @@ function getValues(obj){
   return arr;
 }
 
+/* 
+function getValues(obj) {
+  let arr = [];
+
+  for (const key in obj) {
+    if (Object.hasOwn(obj, key)) {
+      arr.push(obj[key]);
+    }
+  }
+
+  return arr;
+}
+*/
+
 //entries
 function getEntries(obj){
   let arr = [];
@@ -97,6 +129,20 @@ function getEntries(obj){
 
   return arr;
 }
+
+/* 
+function getEntries(obj) {
+  let arr = [];
+
+  for (const key in obj) {
+    if (Object.hasOwn(obj, key)) {
+      arr.push([key, obj[key]]);
+    }
+  }
+
+  return arr;
+}
+*/
 
 
 // 계산된 프로퍼티 (computed property)
@@ -219,6 +265,12 @@ second.addEventListener('click', function () {
   this.style.color = 'orange';
 });
  */
+
+const [first,second,third] = document.querySelectorAll('span');
+
+second.addEventListener('click',function(){
+  this.style.color = 'orange'
+})
 
 
 /* -------------------------------------------- */
