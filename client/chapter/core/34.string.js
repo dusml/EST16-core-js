@@ -29,6 +29,24 @@ let subString = message.substring(2,5);
 let indexOf;
 let lastIndexOf;
 
+function checkBrowser() {
+  const agent = navigator.userAgent.toLowerCase();
+  let browserName;
+
+  switch (true) {
+  case agent.indexOf('edg') > -1: browserName = 'MS Edge'; break;
+  case agent.indexOf('chrome') > -1 && !!window.chrome: browserName = 'Chrome'; break;
+  case agent.indexOf('safari') > -1: browserName = 'Safari'; break;
+  case agent.indexOf('firefox') > -1: browserName = 'Firefox'; break;
+  case agent.indexOf('trident') > -1: browserName = 'MS'; break;
+  default: browserName = '모던 브라우저가 아닙니다!';
+}
+
+  return browserName;
+}
+
+
+
 
 let includes = message.includes('is');
 let startsWith = message.startsWith('Less');
@@ -51,5 +69,17 @@ let toUpperCase;
 
 
 // 텍스트 이름 변환 유틸리티 함수
-let toCamelCase;
-let toPascalCase;
+// let toCamelCase;
+// let toPascalCase;
+
+
+// 텍스트 이름 변환 유틸리티 함수
+function toCamelCase(string) {
+  return string.replace(/(\s|-|_)+./g, ($1) => $1.trim().replace(/(-|_)+/, '').toUpperCase())
+}
+
+
+function toPascalCase(string) {
+  let name = toCamelCase(string);
+  return name[0].toUpperCase() + name.slice(1);
+}
