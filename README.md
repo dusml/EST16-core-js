@@ -1,7 +1,20 @@
 # JavaScript 기초 학습 노트
 
 EST 16기 수업에서 배운 JavaScript의 핵심 개념과 실습 코드를 정리하는 공간입니다.
-변수와 자료형부터 연산자, 조건문, 반복문, 함수, 객체, 상속, 클로저와 숫자·문자열 메서드까지 직접 실행해 보며 동작 원리를 익힙니다.
+변수와 자료형부터 연산자, 조건문, 반복문, 함수, 객체, 상속, 클로저, 숫자·문자열·배열, 예외 처리와 BOM·DOM·이벤트까지 직접 실행해 보며 동작 원리를 익힙니다.
+
+## 빠른 이동
+
+원하는 주제를 클릭하면 해당 설명으로 바로 이동합니다. 각 절의 아래에서 **이전 · 다음 · 빠른 이동** 링크도 사용할 수 있습니다.
+
+| 학습 묶음 | 바로가기 |
+| --- | --- |
+| 기본 문법 | [변수](#02-변수와-상수) · [자료형](#06-데이터-타입) · [연산자](#08-기본-연산자) · [조건문](#10-조건문과-조건부-연산자) · [반복문](#14-while-반복문) |
+| 함수와 객체 | [함수](#19-함수-선언과-활용) · [객체](#23-객체-속성과-구조-분해-할당) · [상속](#27-프로토타입-상속과-생성자-함수) · [클래스](#28-클래스와-상속) · [클로저](#29-클로저와-커링) |
+| 데이터와 오류 | [숫자](#33-숫자-표현과-math) · [문자열](#34-문자열-메서드) · [배열](#35-배열-기초) · [배열 메서드](#36-배열-메서드와-함수-조합) · [예외 처리](#37-예외-처리와-json) |
+| 브라우저와 DOM | [BOM](#dom-01-bom과-브라우저-객체) · [탐색](#dom-02-dom-탐색) · [콘텐츠](#dom-03-노드-클래스와-콘텐츠) · [속성](#dom-04-속성과-프로퍼티) · [삽입](#dom-05-노드-생성과-삽입) · [스타일](#dom-06-클래스와-스타일) |
+| 이벤트 | [이벤트 처리](#dom-07-이벤트-처리) · [버블링·캡처링](#dom-08-버블링과-캡처링) · [이벤트 위임](#dom-09-이벤트-위임) |
+| 참고 | [전체 목차](#목차) · [키워드 검색](#키워드로-찾아보기) · [유틸 함수](#공통-유틸-함수) · [파일 구성](#프로젝트-파일-구성) · [복습 질문](#복습-질문) · [실행 방법](#실습-실행-방법) |
 
 ## 목차
 
@@ -43,8 +56,25 @@ EST 16기 수업에서 배운 JavaScript의 핵심 개념과 실습 코드를 �
 | 32 | [원시값 메서드와 래퍼 객체](#32-원시값-메서드와-래퍼-객체) | 원시값, 자동 래핑, `split` |
 | 33 | [숫자 표현과 Math](#33-숫자-표현과-math) | 숫자 구분자, 지수 표기, 어림수, 난수, 진법 |
 | 34 | [문자열 메서드](#34-문자열-메서드) | 불변성, 추출, 검색, 공백 제거, 반복 |
+| 35 | [배열 기초](#35-배열-기초) | 인덱스, 큐·스택, 복사, 다차원 배열 |
+| 36 | [배열 메서드와 함수 조합](#36-배열-메서드와-함수-조합) | map, filter, reduce, 커링, go |
+| 37 | [예외 처리와 JSON](#37-예외-처리와-json) | try, catch, throw, finally |
 
-[키워드로 찾아보기](#키워드로-찾아보기) · [복습 질문](#복습-질문) · [실습 실행 방법](#실습-실행-방법)
+DOM 학습 파일은 `client/chapter/dom`에서 번호가 다시 시작합니다.
+
+| 순서 | 학습 주제 | 핵심 키워드 |
+| --- | --- | --- |
+| DOM 01 | [BOM과 브라우저 객체](#dom-01-bom과-브라우저-객체) | window, location, navigator, screen, history |
+| DOM 02 | [DOM 탐색](#dom-02-dom-탐색) | 노드·요소 탐색, 선택자, closest |
+| DOM 03 | [노드 클래스와 콘텐츠](#dom-03-노드-클래스와-콘텐츠) | nodeType, innerHTML, textContent, hidden |
+| DOM 04 | [속성과 프로퍼티](#dom-04-속성과-프로퍼티) | attribute, property, dataset |
+| DOM 05 | [노드 생성과 삽입](#dom-05-노드-생성과-삽입) | createElement, append, insertAdjacentHTML |
+| DOM 06 | [클래스와 스타일](#dom-06-클래스와-스타일) | classList, style, getComputedStyle |
+| DOM 07 | [이벤트 처리](#dom-07-이벤트-처리) | 이벤트 객체, 좌표, debounce, throttle |
+| DOM 08 | [버블링과 캡처링](#dom-08-버블링과-캡처링) | target, currentTarget, stopPropagation |
+| DOM 09 | [이벤트 위임](#dom-09-이벤트-위임) | closest, classList, dataset |
+
+[키워드로 찾아보기](#키워드로-찾아보기) · [공통 유틸 함수](#공통-유틸-함수) · [프로젝트 파일 구성](#프로젝트-파일-구성) · [복습 질문](#복습-질문) · [실습 실행 방법](#실습-실행-방법)
 
 ## 키워드로 찾아보기
 
@@ -89,6 +119,17 @@ EST 16기 수업에서 배운 JavaScript의 핵심 개념과 실습 코드를 �
 | 원시값에서 메서드를 사용할 수 있는 이유 | [원시값 메서드와 래퍼 객체](#32-원시값-메서드와-래퍼-객체) |
 | 반올림·내림·절삭, 범위 내 난수와 진법 변환 | [숫자 표현과 Math](#33-숫자-표현과-math) |
 | 문자열 자르기, 포함 여부 확인, 공백 제거와 반복 | [문자열 메서드](#34-문자열-메서드) |
+| 배열 추가·제거, 큐·스택, 배열 복사 | [배열 기초](#35-배열-기초) |
+| 배열 변환·검색·합계, 커링과 함수 조합 | [배열 메서드와 함수 조합](#36-배열-메서드와-함수-조합) |
+| JSON 변환과 오류 처리 | [예외 처리와 JSON](#37-예외-처리와-json) |
+| URL, 위치 정보, 카메라, 방문 기록 | [BOM과 브라우저 객체](#dom-01-bom과-브라우저-객체) |
+| 요소 찾기, 부모·자식·형제 탐색 | [DOM 탐색](#dom-02-dom-탐색) |
+| HTML·텍스트 변경, 노드 종류 확인 | [노드 클래스와 콘텐츠](#dom-03-노드-클래스와-콘텐츠) |
+| 속성 읽기·쓰기, data-* 사용 | [속성과 프로퍼티](#dom-04-속성과-프로퍼티) |
+| 요소 생성·복제·삽입·삭제 | [노드 생성과 삽입](#dom-05-노드-생성과-삽입) |
+| 클래스 변경과 계산된 스타일 읽기 | [클래스와 스타일](#dom-06-클래스와-스타일) |
+| 이벤트 등록, 연속 이벤트 호출 제한 | [이벤트 처리](#dom-07-이벤트-처리) |
+| 이벤트 전파와 부모에서 클릭 처리하기 | [버블링과 캡처링](#dom-08-버블링과-캡처링) · [이벤트 위임](#dom-09-이벤트-위임) |
 
 ---
 
@@ -100,7 +141,7 @@ EST 16기 수업에서 배운 JavaScript의 핵심 개념과 실습 코드를 �
 - `alert()`는 메시지를 표시하고, `confirm()`은 확인 여부를 불리언으로 반환합니다.
 - `prompt()`는 입력한 문자열을 반환하며, 취소하면 `null`을 반환합니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 키워드로 찾아보기](#키워드로-찾아보기) · [다음: 02. 변수와 상수 →](#02-변수와-상수)
 
 ---
 
@@ -119,7 +160,7 @@ nickName = 'lion';
 const OUR_PLANET_NAME = 'earth';
 ```
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 01. 코드 구조](#01-코드-구조) · [다음: 03. 엄격 모드 →](#03-엄격-모드)
 
 ---
 
@@ -138,7 +179,7 @@ let message = 'hello';
 // 선언하지 않은 변수에 할당하면 ReferenceError가 발생합니다.
 ```
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 02. 변수와 상수](#02-변수와-상수) · [다음: 04. 전역 객체 →](#04-전역-객체)
 
 ---
 
@@ -149,7 +190,7 @@ let message = 'hello';
 - `globalThis`로 현재 실행 환경의 전역 객체에 접근합니다.
 - 브라우저의 일반 `<script>`에서 최상위 `var` 선언은 전역 객체의 프로퍼티가 되지만, `let`과 `const` 선언은 그렇지 않습니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 03. 엄격 모드](#03-엄격-모드) · [다음: 05. var와 스코프 →](#05-var와-스코프)
 
 ---
 
@@ -161,7 +202,7 @@ let message = 'hello';
 - 블록만으로는 범위가 제한되지 않습니다. 블록 스코프를 가지는 `let`, `const`와 비교합니다.
 - `var`는 같은 스코프에서 중복 선언을 허용합니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 04. 전역 객체](#04-전역-객체) · [다음: 06. 데이터 타입 →](#06-데이터-타입)
 
 ---
 
@@ -189,7 +230,7 @@ typeof undefined; // 'undefined'
 typeof null;      // 'object' — 언어의 오래된 특수 동작
 ```
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 05. var와 스코프](#05-var와-스코프) · [다음: 07. 형 변환 →](#07-형-변환)
 
 ---
 
@@ -217,7 +258,7 @@ parseFloat('120.5px');  // 120.5
 
 빈 문자열 `''`과 공백이 들어 있는 문자열 `' '`은 서로 다릅니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 06. 데이터 타입](#06-데이터-타입) · [다음: 08. 기본 연산자 →](#08-기본-연산자)
 
 ---
 
@@ -238,7 +279,7 @@ parseFloat('120.5px');  // 120.5
 
 연산자가 여러 개 등장하면 우선순위를 확인하고, 괄호로 계산 의도를 분명하게 표현합니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 07. 형 변환](#07-형-변환) · [다음: 09. 비교 연산자 →](#09-비교-연산자)
 
 ---
 
@@ -258,7 +299,7 @@ parseFloat('120.5px');  // 120.5
 6 < 10;      // true
 ```
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 08. 기본 연산자](#08-기본-연산자) · [다음: 10. 조건문과 조건부 연산자 →](#10-조건문과-조건부-연산자)
 
 ---
 
@@ -276,7 +317,7 @@ const didWatchMovie = false;
 const message = didWatchMovie ? '영화를 봤어요.' : '아직 보지 않았어요.';
 ```
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 09. 비교 연산자](#09-비교-연산자) · [다음: 11. 논리 연산자와 로그인 실습 →](#11-논리-연산자와-로그인-실습)
 
 ---
 
@@ -312,7 +353,7 @@ false || '' || 2; // 2
 
 옵셔널 체이닝은 앞의 값이 `null` 또는 `undefined`이면 해당 체인의 평가를 중단하고 `undefined`를 반환합니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 10. 조건문과 조건부 연산자](#10-조건문과-조건부-연산자) · [다음: 12. switch와 함수 활용 →](#12-switch와-함수-활용)
 
 ---
 
@@ -335,7 +376,7 @@ function getRandom(n) {
 getRandom(7); // 0부터 6까지의 정수 중 하나
 ```
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 11. 논리 연산자와 로그인 실습](#11-논리-연산자와-로그인-실습) · [다음: 13. null 병합 연산자 →](#13-null-병합-연산자)
 
 ---
 
@@ -356,7 +397,7 @@ null ?? '기본값';      // '기본값'
 
 `0`, `false`, `''`도 유효한 입력값이라면 기본값을 지정할 때 `??`를 활용할 수 있습니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 12. switch와 함수 활용](#12-switch와-함수-활용) · [다음: 14. while 반복문 →](#14-while-반복문)
 
 ---
 
@@ -384,7 +425,7 @@ while (remaining) {
 }
 ```
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 13. null 병합 연산자](#13-null-병합-연산자) · [다음: 15. do while과 DOM 탐색 →](#15-do-while과-dom-탐색)
 
 ---
 
@@ -409,7 +450,7 @@ do {
 
 형제 노드 탐색 함수는 작성 중인 실습입니다. 선택자를 요소로 변환한 뒤 다시 조회하지 않도록 하고, 이전 형제 탐색에는 `previousSibling`을 사용합니다. 더 이상 형제가 없으면 `null`이므로 `nodeType`에 접근하기 전에 확인해야 합니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 14. while 반복문](#14-while-반복문) · [다음: 16. for 반복문 →](#16-for-반복문)
 
 ---
 
@@ -442,7 +483,7 @@ while (copied.length) {
 console.log(subjects); // 원본 배열 유지
 ```
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 15. do while과 DOM 탐색](#15-do-while과-dom-탐색) · [다음: 17. for in과 객체 속성 →](#17-for-in과-객체-속성)
 
 ---
 
@@ -467,7 +508,7 @@ for (const key in language) {
 
 객체의 `hasOwnProperty`가 다른 값으로 덮어써질 수 있으므로, 자신의 속성을 확인할 때는 `Object.hasOwn()` 또는 `Object.prototype.hasOwnProperty.call()`을 사용할 수 있습니다. 배열의 값을 순회할 때는 `for...of`를 활용합니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 16. for 반복문](#16-for-반복문) · [다음: 18. for of와 구조 분해 할당 →](#18-for-of와-구조-분해-할당)
 
 ---
 
@@ -509,7 +550,7 @@ for (const [subject, score] of Object.entries(scores)) {
 }
 ```
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 17. for in과 객체 속성](#17-for-in과-객체-속성) · [다음: 19. 함수 선언과 활용 →](#19-함수-선언과-활용)
 
 ---
 
@@ -545,7 +586,7 @@ const total = calcPrice(1000, 1300); // 2300
 
 파일 끝에는 클릭 이벤트로 글자 크기를 조절하는 추가 과제와 함수 캡슐화에 대한 메모가 있습니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 18. for of와 구조 분해 할당](#18-for-of와-구조-분해-할당) · [다음: 20. 함수 표현식과 콜백 →](#20-함수-표현식과-콜백)
 
 ---
 
@@ -635,7 +676,7 @@ cb(
 
 파일 끝에는 IIFE의 기본 형태와 클로저에 대한 메모가 있습니다. 클로저는 함수가 자신이 만들어진 환경의 변수에 접근할 수 있는 성질이며, IIFE 자체와 같은 뜻은 아닙니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 19. 함수 선언과 활용](#19-함수-선언과-활용) · [다음: 21. 화살표 함수와 this →](#21-화살표-함수와-this)
 
 ---
 
@@ -721,7 +762,7 @@ console.log(user.total); // 170
 
 원본의 실행 코드는 일반 함수 콜백을 사용하고 `forEach(function(grade) { ... }, this)`처럼 두 번째 인수(`thisArg`)를 전달해 콜백의 `this`를 지정합니다. 두 방식 모두 점수를 더할 수 있습니다. 현재 함수는 기존 `total`에 누적하므로 여러 번 호출하면 합계도 계속 증가합니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 20. 함수 표현식과 콜백](#20-함수-표현식과-콜백) · [다음: 22. 재귀 함수와 실행 컨텍스트 →](#22-재귀-함수와-실행-컨텍스트)
 
 ---
 
@@ -810,7 +851,7 @@ memoFibo.cache = {}
 - 재귀로 문제의 구조를 자연스럽게 표현할 수 있는지와 입력 크기를 함께 고려합니다.
 - 단순 재귀 피보나치는 같은 항을 여러 번 계산하므로 입력이 커질수록 계산량이 빠르게 늘어납니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 21. 화살표 함수와 this](#21-화살표-함수와-this) · [다음: 23. 객체 속성과 구조 분해 할당 →](#23-객체-속성과-구조-분해-할당)
 
 ---
 
@@ -893,7 +934,7 @@ const isArray = d => typeOf(d) === 'array';
 
 원본에는 문자열, 숫자, 불리언, BigInt, `null`, `undefined`, 함수, `Math`를 확인하는 함수도 있습니다. `isObject()`는 이 유틸의 기준에서 타입 이름이 `'object'`인지 확인하며, 배열 등 모든 객체를 포괄하는 검사는 아닙니다. `23.object-1.js`의 `removeProperty()`를 호출하려면 이 유틸 파일을 먼저 연결합니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 22. 재귀 함수와 실행 컨텍스트](#22-재귀-함수와-실행-컨텍스트) · [다음: 24. 객체 참조와 복사 →](#24-객체-참조와-복사)
 
 ---
 
@@ -948,7 +989,7 @@ let copiedContainerStyles = {
 
 `cloneDeep()`은 `Object.entries()`로 키와 값을 꺼내고, 값이 `null`이 아닌 객체이면 재귀적으로 복사한 뒤 `Object.fromEntries()`로 객체를 만듭니다. 현재의 일반 중첩 객체 예제에는 사용할 수 있지만, 배열도 일반 객체로 바뀌며 순환 참조나 `Date` 같은 특수 객체를 처리하는 범용 함수는 아닙니다. 파일 끝에는 Lodash의 `_.cloneDeep()`을 활용하는 방법도 메모되어 있습니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 23. 객체 속성과 구조 분해 할당](#23-객체-속성과-구조-분해-할당) · [다음: 25. 가비지 컬렉션 →](#25-가비지-컬렉션)
 
 ---
 
@@ -968,7 +1009,7 @@ const memoizedObject = {
 
 `const`로 선언한 변수에는 `null`을 재할당할 수 없습니다. 또한 객체의 속성을 삭제하거나 비우는 것과 객체 자체에 대한 모든 참조가 사라지는 것은 다릅니다. 다른 변수가 같은 객체를 참조하고 있다면 그 경로로 여전히 접근할 수 있습니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 24. 객체 참조와 복사](#24-객체-참조와-복사) · [다음: 26. 객체 메서드와 this →](#26-객체-메서드와-this)
 
 ---
 
@@ -1004,7 +1045,7 @@ const navigationMenu = {
 
 주문 실습에서는 직접 항목에 접근하는 방식, `forEach()`, `reduce()`로 `price * count`의 합계를 구합니다. `shopOrder.totalPrice()`는 `reduce(..., 0)`의 결과를 `this.total`에 저장합니다. 현재 메뉴의 합계는 `36_000`이며, 호출할 때마다 합계를 새로 계산하므로 중복 누적되지 않습니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 25. 가비지 컬렉션](#25-가비지-컬렉션) · [다음: 27. 프로토타입 상속과 생성자 함수 →](#27-프로토타입-상속과-생성자-함수)
 
 ---
 
@@ -1114,7 +1155,7 @@ const a = sum.bind('hello',1,5);
 
 현재 실행되는 bind는 합계를 즉시 계산하지 않습니다. a는 함수이며, a()를 호출하면 미리 지정한 1과 5를 더해 6을 반환합니다. call과 apply 예제는 주석 상태입니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 26. 객체 메서드와 this](#26-객체-메서드와-this) · [다음: 28. 클래스와 상속 →](#28-클래스와-상속)
 
 ---
 
@@ -1190,7 +1231,7 @@ new Tiger('호돌이')는 부모가 설정한 필드와 name을 가지며 patter
 
 hunt는 tiger.hunt(...)처럼 인스턴스로 호출합니다. static bark는 Tiger.bark('어흥')처럼 클래스 자체로 호출하며 '어흥'을 반환합니다. tiger.bark(...)는 인스턴스 메서드가 아니므로 호출할 수 없습니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 27. 프로토타입 상속과 생성자 함수](#27-프로토타입-상속과-생성자-함수) · [다음: 29. 클로저와 커링 →](#29-클로저와-커링)
 
 ---
 
@@ -1214,7 +1255,7 @@ _multi(2)(5); // 10
 
 현재 일반 함수 버전인 `multi()`의 내부 함수에는 `return`이 없으므로 `double(5)`와 `triple(5)`는 `undefined`를 반환합니다. 곱셈 결과를 반환하려면 `return x * y`가 필요합니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 28. 클래스와 상속](#28-클래스와-상속) · [다음: 30. 클로저로 상태 관리하기 →](#30-클로저로-상태-관리하기)
 
 ---
 
@@ -1236,7 +1277,7 @@ read(); // 'JavaScript'
 
 원본의 `setValue()`는 인수 없이 호출되므로 내부 값이 `undefined`로 바뀝니다. 새 값을 저장하려면 인수를 전달합니다. 버튼 실습은 HTML의 `button` 요소가 필요하므로 `defer`를 유지합니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 29. 클로저와 커링](#29-클로저와-커링) · [다음: 31. 옵셔널 체이닝과 브라우저 타이머 →](#31-옵셔널-체이닝과-브라우저-타이머)
 
 ---
 
@@ -1265,7 +1306,7 @@ read(); // 'JavaScript'
 
 동적으로 생성되는 `.btn`은 생성 이후 다시 조회해야 합니다. 생성 전에 저장한 `button` 변수는 자동으로 갱신되지 않습니다. 현재 애니메이션은 HTML에 이미 있는 첫 번째 `button`을 대상으로 하며, 콘솔 출력용 인터벌은 별도로 계속 실행됩니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 30. 클로저로 상태 관리하기](#30-클로저로-상태-관리하기) · [다음: 32. 원시값 메서드와 래퍼 객체 →](#32-원시값-메서드와-래퍼-객체)
 
 ---
 
@@ -1282,7 +1323,7 @@ message.split(' '); // ['원시', '값은', '객체가', '아닙니다.']
 
 `String`, `Number`, `Boolean` 등의 래퍼 기능을 통해 메서드에 접근할 수 있습니다. `null`과 `undefined`는 이러한 래핑을 제공하지 않으므로 직접 프로퍼티나 메서드에 접근하면 오류가 발생합니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 31. 옵셔널 체이닝과 브라우저 타이머](#31-옵셔널-체이닝과-브라우저-타이머) · [다음: 33. 숫자 표현과 Math →](#33-숫자-표현과-math)
 
 ---
 
@@ -1309,7 +1350,7 @@ getRandomMinMax(2, 10); // 2 이상 10 미만의 정수
 
 `Math.min()` 활용과 `colorChip`의 RGB 값을 16진수로 바꾸고 되돌리는 부분은 아직 구현할 실습으로 남아 있습니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 32. 원시값 메서드와 래퍼 객체](#32-원시값-메서드와-래퍼-객체) · [다음: 34. 문자열 메서드 →](#34-문자열-메서드)
 
 ---
 
@@ -1333,7 +1374,352 @@ getRandomMinMax(2, 10); // 2 이상 10 미만의 정수
 
 `trim()`은 문자열 사이의 공백을 제거하지 않습니다. `indexOf`, `lastIndexOf`, 앞뒤 공백 제거, 대소문자 변환과 `toCamelCase`·`toPascalCase` 유틸 함수는 현재 변수만 선언된 실습 항목입니다.
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 33. 숫자 표현과 Math](#33-숫자-표현과-math) · [다음: 35. 배열 기초 →](#35-배열-기초)
+
+---
+
+## 35. 배열 기초
+
+학습 파일: [35.array-1.js](client/chapter/core/35.array-1.js)
+
+배열은 순서가 있는 값의 집합이며 인덱스는 0부터 시작합니다. `length`로 길이를 확인하고 `array[index]`로 요소를 읽거나 변경합니다.
+
+| 메서드 | 동작 | 반환값 |
+| --- | --- | --- |
+| `push(value)` | 끝에 추가 | 변경된 길이 |
+| `unshift(value)` | 앞에 추가 | 변경된 길이 |
+| `pop()` | 끝에서 제거 | 제거한 값 |
+| `shift()` | 앞에서 제거 | 제거한 값 |
+
+`push()`와 `shift()`를 조합하면 먼저 들어온 값이 먼저 나가는 큐(FIFO), `push()`와 `pop()`을 조합하면 나중에 들어온 값이 먼저 나가는 스택(LIFO)을 만들 수 있습니다.
+
+```js
+const friends = '태민 소영 철현'.split(' ');
+const copiedStatic = Array.from(friends);
+const copiedInstance = friends.slice();
+const copiedSpread = [...friends];
+const matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+matrix[1][1]; // 5
+```
+
+세 복사 방식은 얕은 복사입니다. 원본 파일의 `split('')`는 이름 단위가 아니라 문자 단위로 나누며, `Array.from[friends]`는 함수 호출이 아닙니다. 위 예제는 이름 단위 분리와 `Array.from(friends)` 호출 형태를 보여 줍니다. 요소 변경·순회와 행렬 중앙값 찾기는 원본에서 실습 항목으로 남아 있습니다.
+
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 34. 문자열 메서드](#34-문자열-메서드) · [다음: 36. 배열 메서드와 함수 조합 →](#36-배열-메서드와-함수-조합)
+
+---
+
+## 36. 배열 메서드와 함수 조합
+
+학습 파일: [36.array-2.js](client/chapter/core/36.array-2.js)
+
+`people` 객체 배열로 사용자 정보를 순회하고 HTML 목록을 만듭니다. `map()`으로 템플릿 문자열을 만든 뒤 `join('')`으로 합치거나, `reduce()`로 문자열을 누적해 `ul`에 삽입합니다.
+
+| 메서드 | 용도 | 반환값 |
+| --- | --- | --- |
+| `Array.isArray(value)` | 배열 여부 확인 | 불리언 |
+| `forEach(callback)` | 요소별 작업 실행 | `undefined` |
+| `map(callback)` | 각 요소를 변환 | 새 배열 |
+| `find(callback)` | 조건을 만족하는 첫 요소 검색 | 요소 또는 `undefined` |
+| `findIndex(callback)` | 조건을 만족하는 첫 인덱스 검색 | 인덱스 또는 `-1` |
+| `filter(callback)` | 조건을 만족하는 요소 선택 | 새 배열 |
+| `reduce(callback, initialValue)` | 값을 누적 | 최종 누적값 |
+| `reduceRight(callback, initialValue)` | 오른쪽부터 누적 | 최종 누적값 |
+| `indexOf`, `lastIndexOf`, `includes` | 위치·포함 여부 확인 | 인덱스 또는 불리언 |
+| `split`, `join` | 문자열과 배열 사이 변환 | 배열 또는 문자열 |
+
+`push`, `pop`, `unshift`, `shift`, `reverse`, `splice`, `sort`는 원본 배열을 변경합니다. `concat`, `slice`, `toSorted`, `toReversed`, `toSpliced`, `map`, `filter`는 새 배열을 반환하지만, 배열 안의 객체까지 깊게 복사하지는 않습니다. 원본 변경 여부 분류와 일부 메서드는 주석으로 소개되어 있습니다.
+
+```js
+const people = [{ name: '소연', age: 28 }, { name: '민지', age: 25 }];
+people.map(user => user.age + 2); // [30, 27]
+people.find(user => user.age > 25); // 첫 번째 객체
+people.filter(user => user.age > 25); // 첫 번째 객체를 담은 배열
+people.reduce((acc, user) => acc + user.age, 0); // 53
+```
+
+후반부에서는 `for...of`로 `forEach`, `map`, `filter`, `reduce`를 직접 구현합니다. `curry`는 인수를 나눠 전달하고, `curryN`은 지정한 인수 개수에 도달할 때까지 인수를 모읍니다. 이를 이용한 `_forEach`, `_map`, `_filter`, `_reduce`와 `go(value, ...functions)`로 변환 과정을 연결합니다.
+
+```js
+// 학습 파일의 product, _filter, _map, _reduce, add, go를 사용합니다.
+go(
+  product,
+  _filter(p => p.price >= 13000),
+  _map(p => p.price),
+  _reduce(add, 0),
+  console.log
+); // 28900
+```
+
+직접 만든 함수들은 학습용 구현입니다. 특히 `reduce`와 `_reduce`는 초기값을 전달하는 형태입니다. `pipe`, `flat`, `flatMap`, `take`와 지연 평가(Lazy function)는 아직 주석으로만 남아 있습니다.
+
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 35. 배열 기초](#35-배열-기초) · [다음: 37. 예외 처리와 JSON →](#37-예외-처리와-json)
+
+---
+
+## 37. 예외 처리와 JSON
+
+학습 파일: [37.tryCatch.js](client/chapter/core/37.tryCatch.js)
+
+- `try`에서 코드를 실행하고 오류가 발생하면 남은 실행을 중단한 뒤 `catch`로 이동합니다.
+- `JSON.stringify()`는 값을 JSON 문자열로, `JSON.parse()`는 JSON 문자열을 JavaScript 값으로 변환합니다.
+- `throw`는 예외를 던집니다. `new Error()`, `TypeError`, `SyntaxError`, `ReferenceError` 등으로 오류 객체를 만들 수 있습니다.
+- 오류 객체의 `name`, `message`, `stack`으로 종류·메시지·호출 정보를 확인합니다.
+- `finally`는 정상 완료나 예외 처리 후 정리 작업에 사용합니다. 원본에는 설명만 있습니다.
+
+```js
+try {
+  const user = JSON.parse('{"name":"소연"}');
+  if (!('value' in user)) {
+    throw new ReferenceError('해당 키 값은 존재하지 않습니다.');
+  }
+} catch ({ message }) {
+  console.log(message);
+}
+```
+
+원본은 `!user.value`로 검사하므로 속성이 없어도, 값이 `0`, `false`, `''`여도 오류를 던집니다. 오류가 나면 `document.body.innerHTML`을 바꾸므로 기존 화면이 교체됩니다. 위 예제는 키 존재 여부를 검사하는 방식입니다.
+
+같은 스크립트의 구문 분석 오류는 해당 `try...catch`로 처리할 수 없습니다. 타이머 콜백의 오류는 콜백 안에서 처리하고, Promise 실패는 `.catch()` 또는 `async` 함수의 `try...catch` 안에서 `await`로 처리합니다.
+
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 36. 배열 메서드와 함수 조합](#36-배열-메서드와-함수-조합) · [다음: DOM 01. BOM과 브라우저 객체 →](#dom-01-bom과-브라우저-객체)
+
+---
+
+## DOM 01. BOM과 브라우저 객체
+
+학습 파일: [1.BOM.js](client/chapter/dom/1.BOM.js)
+
+호스트 환경은 JavaScript에 실행 환경 고유의 기능을 제공합니다. BOM은 브라우저의 문서 외 기능을 다루는 객체들을 가리킵니다.
+
+| 객체 | 학습 내용 |
+| --- | --- |
+| `window` | 전역 객체, 대화상자, 타이머 |
+| `location` | `href`, `protocol`, `host`, `port`, `pathname`, `search`, `hash`, `replace`, `reload` |
+| `navigator` | `platform`, `userAgent`, `language`, `onLine`, 위치 정보, 미디어 장치 |
+| `screen` | 화면 크기, 사용 가능 영역, 방향; 창의 높이는 `innerHeight` |
+| `history` | `back`, `forward`, `go`, `length`, `pushState`, `replaceState` |
+
+`new URLSearchParams(location.search)`로 URL 쿼리 값을 읽고 순회합니다. `getGeolocation(success)`는 위도·경도를 `{ lat, long }`으로 콜백에 전달합니다. 카메라 실습은 `getUserMedia({ video: true })`의 스트림을 `#videoElement.srcObject`에 연결합니다. 위치·카메라 접근에는 브라우저 권한이 필요하며, 파일에는 거절·실패 처리가 구현되어 있지 않습니다.
+
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 37. 예외 처리와 JSON](#37-예외-처리와-json) · [다음: DOM 02. DOM 탐색 →](#dom-02-dom-탐색)
+
+---
+
+## DOM 02. DOM 탐색
+
+학습 파일: [2.DOM.js](client/chapter/dom/2.DOM.js)
+
+| 모든 노드 탐색 | 요소만 탐색 |
+| --- | --- |
+| `parentNode` | `parentElement` |
+| `childNodes` | `children` |
+| `firstChild`, `lastChild` | `firstElementChild`, `lastElementChild` |
+| `previousSibling`, `nextSibling` | `previousElementSibling`, `nextElementSibling` |
+
+공백 텍스트와 주석도 노드이므로 요소 탐색 결과와 다를 수 있습니다. `getElementById`, `getElementsByTagName`, `getElementsByClassName`, `querySelector`, `querySelectorAll`로 대상을 찾고, `closest()`로 자신부터 조상 방향으로 탐색합니다. `matches()`는 선택자 일치 여부, `contains()`는 노드 포함 여부를 확인합니다.
+
+```js
+const nav = document.querySelector('.navigation');
+const about = nav.querySelector('li.about');
+const contact = nav.querySelector('[data-name="contact"]');
+const items = nav.querySelectorAll('ul > *');
+const body = nav.closest('body');
+```
+
+원본의 `parenfirstElementChildtNode`는 `firstElementChild`의 오타입니다. 마지막 `getNodes()` 호출에는 조회할 선택자를 전달해야 합니다.
+
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: DOM 01. BOM과 브라우저 객체](#dom-01-bom과-브라우저-객체) · [다음: DOM 03. 노드 클래스와 콘텐츠 →](#dom-03-노드-클래스와-콘텐츠)
+
+---
+
+## DOM 03. 노드 클래스와 콘텐츠
+
+학습 파일: [3.nodeClass.js](client/chapter/dom/3.nodeClass.js)
+
+`EventTarget → Node → Element → HTMLElement → HTMLButtonElement`처럼 상속을 통해 기능이 확장됩니다. `Text`와 `Comment`도 `Node`를 상속하며, `SVGElement`는 `Element`를 상속합니다.
+
+- `nodeType`: 요소 노드는 `1` 또는 `document.ELEMENT_NODE`입니다.
+- `nodeName`: 노드 이름입니다. `tagName`은 요소의 태그 이름입니다.
+- `innerHTML`: HTML을 읽거나 파싱해 내용을 교체합니다. `+=`도 기존 자식을 다시 생성할 수 있습니다.
+- `textContent`: HTML을 해석하지 않고 텍스트를 읽거나 설정합니다.
+- `hidden`: 요소의 숨김 상태를 제어하는 불리언 프로퍼티입니다.
+
+파일에는 `gsap.from('nav li', ...)`로 이동·투명도·순차 지연을 주는 애니메이션도 있습니다. 이를 실행하려면 GSAP 스크립트를 먼저 로드합니다. 외부 입력을 그대로 `innerHTML`에 넣으면 XSS 위험이 있으므로 단순 텍스트는 `textContent`로 설정합니다.
+
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: DOM 02. DOM 탐색](#dom-02-dom-탐색) · [다음: DOM 04. 속성과 프로퍼티 →](#dom-04-속성과-프로퍼티)
+
+---
+
+## DOM 04. 속성과 프로퍼티
+
+학습 파일: [4.attribute.js](client/chapter/dom/4.attribute.js)
+
+HTML 속성 값은 문자열이며 DOM 프로퍼티는 불리언 등 다른 타입도 가질 수 있습니다. 표준 속성은 대응하는 프로퍼티를 제공하지만 모든 속성과 프로퍼티가 항상 같은 상태를 유지하는 것은 아닙니다.
+
+`hasAttribute`, `getAttribute`, `setAttribute`, `removeAttribute`로 속성을 확인·조회·설정·제거하고, `attributes`를 순회해 나열합니다. `setAttribute('class', '')`는 빈 속성을 남기고 `removeAttribute('class')`는 속성을 제거합니다.
+
+```js
+const first = document.querySelector('.first');
+first.setAttribute('id', 'first');
+first.dataset.name = 'hello'; // data-name="hello"
+first.dataset.name = 'bye';
+for (const attribute of first.attributes) console.log(attribute);
+```
+
+`data-*`는 사용자 정의 데이터를 저장하며 `data-user-name`은 `dataset.userName`으로 접근합니다. 파일의 `attr('.second', 'class', '')`는 공통 유틸의 규칙에 따라 속성을 제거합니다.
+
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: DOM 03. 노드 클래스와 콘텐츠](#dom-03-노드-클래스와-콘텐츠) · [다음: DOM 05. 노드 생성과 삽입 →](#dom-05-노드-생성과-삽입)
+
+---
+
+## DOM 05. 노드 생성과 삽입
+
+학습 파일: [5.manipulation.js](client/chapter/dom/5.manipulation.js)
+
+`createElement()`로 요소를, `createTextNode()`로 텍스트 노드를 만듭니다. `cloneNode(true)`는 자손까지 복제하며, `addEventListener()`로 등록한 핸들러는 복제하지 않습니다.
+
+`append`, `prepend`, `before`, `after`로 노드나 문자열을 삽입하고, `replaceWith`로 교체하며 `remove`로 삭제합니다. 기존 방식으로는 부모의 `appendChild`, `insertBefore`, `removeChild`, `replaceChild`가 있습니다.
+
+```js
+const div = document.createElement('div');
+div.textContent = 'hello tiger 🐯';
+div.className = 'tiger';
+div.dataset.value = '10';
+document.body.append(div);
+```
+
+| `insertAdjacentHTML` 위치 | 삽입 위치 | 공통 유틸 |
+| --- | --- | --- |
+| `beforebegin` | 대상 바로 앞의 형제 위치 | `insertBefore` |
+| `afterbegin` | 대상의 첫 자식 위치 | `insertFirst` |
+| `beforeend` | 대상의 마지막 자식 위치 | `insertLast` |
+| `afterend` | 대상 바로 뒤의 형제 위치 | `insertAfter` |
+
+`insertAdjacentElement`는 요소를, `insertAdjacentText`는 텍스트를 삽입합니다. 공통 유틸 `insertBefore`는 HTML 문자열을 받는 함수로, 부모 노드의 기본 `insertBefore()` 메서드와 사용법이 다릅니다.
+
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: DOM 04. 속성과 프로퍼티](#dom-04-속성과-프로퍼티) · [다음: DOM 06. 클래스와 스타일 →](#dom-06-클래스와-스타일)
+
+---
+
+## DOM 06. 클래스와 스타일
+
+학습 파일: [6.style.js](client/chapter/dom/6.style.js)
+
+`className`은 클래스 전체를 문자열로 다루고 `classList.add`, `remove`, `toggle`, `contains`는 개별 클래스를 관리합니다. 공통 유틸 `addClass`, `removeClass`, `toggleClass`로도 조작합니다.
+
+```js
+addClass('.first', 'title, highlighted');
+toggleClass('.first', 'active');
+removeClass('.first', ''); // 클래스 속성 전체 제거
+```
+
+`element.style`은 인라인 스타일을 다루고, `style.cssText`는 인라인 스타일 전체 문자열을 설정합니다. `getComputedStyle(element, pseudoElement)`은 스타일시트까지 반영한 계산된 스타일을 읽습니다. 원본 파일에서 스타일 설정과 계산된 스타일 읽기는 설명만 있는 항목입니다.
+
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: DOM 05. 노드 생성과 삽입](#dom-05-노드-생성과-삽입) · [다음: DOM 07. 이벤트 처리 →](#dom-07-이벤트-처리)
+
+---
+
+## DOM 07. 이벤트 처리
+
+학습 파일: [7.event.js](client/chapter/dom/7.event.js)
+
+이벤트는 HTML의 `onclick` 속성, DOM의 `element.onclick` 프로퍼티, `addEventListener()`로 등록합니다. 프로퍼티 방식은 기존 핸들러를 대체하며 `addEventListener()`는 여러 핸들러를 등록할 수 있습니다. 제거할 때는 `removeEventListener()`에 등록 당시의 함수 참조와 동일한 캡처 설정을 전달합니다.
+
+이벤트 객체로 `altKey`, 화면 영역 기준 `clientX/clientY`, 대상의 패딩 경계 기준 `offsetX/offsetY`, 휠 이동 `deltaY`를 읽습니다. 파일의 `handler`는 공의 크기 절반을 빼서 `transform: translate(...)` 위치를 계산하지만 현재 리스너에 연결되어 있지 않습니다.
+
+`mousemove`는 `throttle(moveHandler, 300)`로 호출 횟수를 제한해 `.ground`에 이모지를 추가합니다. `resize`에는 `debounce`와 `throttle`을 각각 연결합니다.
+
+- `debounce(f, limit = 1000)`: 연속 호출이 멈춘 뒤 마지막 이벤트를 한 번 처리합니다.
+- `throttle(f, limit = 1000)`: 첫 호출을 즉시 처리하고 제한 시간 안의 후속 호출은 건너뜁니다. 현재 구현에는 마지막 호출을 예약하는 기능이 없습니다.
+
+실행하려면 두 유틸 스크립트와 `.ground`, `.ball` 요소가 필요합니다. 현재 HTML의 경기장 마크업은 주석 처리되어 있으므로 해제해야 합니다.
+
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: DOM 06. 클래스와 스타일](#dom-06-클래스와-스타일) · [다음: DOM 08. 버블링과 캡처링 →](#dom-08-버블링과-캡처링)
+
+---
+
+## DOM 08. 버블링과 캡처링
+
+학습 파일: [8.bubble.js](client/chapter/dom/8.bubble.js)
+
+이벤트는 캡처 단계에서 조상에서 대상으로 내려가고, 대상 단계 이후 버블 단계에서 조상으로 올라갑니다. 기본 `addEventListener()`는 버블 단계에서 처리하며 `{ capture: true }`로 캡처 단계 리스너를 등록합니다. 원본에는 캡처링 구현 없이 항목 제목만 있습니다.
+
+- `event.target`: 이벤트가 발생한 대상입니다.
+- `event.currentTarget`: 현재 핸들러를 실행하는 요소입니다.
+- `stopPropagation()`: 다음 노드로의 전파를 막습니다. 같은 요소의 다른 리스너까지 중단하려면 `stopImmediatePropagation()`을 사용합니다.
+
+파일은 `section > article > p`에 클릭 리스너를 등록하고 `article`, `p`에서 전파를 막습니다. `section`의 `mouseenter`, `mouseleave`로 배경색도 바꿉니다. 이 두 이벤트는 버블링하지 않습니다. 화살표 핸들러의 `this`는 요소로 바인딩되지 않으므로 현재 요소를 읽을 때 `currentTarget`을 사용합니다.
+
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: DOM 07. 이벤트 처리](#dom-07-이벤트-처리) · [다음: DOM 09. 이벤트 위임 →](#dom-09-이벤트-위임)
+
+---
+
+## DOM 09. 이벤트 위임
+
+학습 파일: [9.delegation.js](client/chapter/dom/9.delegation.js)
+
+자식마다 핸들러를 등록하는 대신 부모 `.navigation`에 클릭 리스너 하나를 등록합니다. `event.target.closest('li')`로 링크 등 내부 요소의 클릭도 메뉴 항목으로 찾고, 항목이 없으면 `return`으로 종료합니다. 부모 리스너가 처리하므로 나중에 추가된 항목에도 적용할 수 있습니다.
+
+파일에는 클래스의 `contains()`와 `getAttribute('data-name')`을 사용하는 주석 예제, `dataset.name`을 사용하는 실행 코드가 있습니다. 노드를 사용한 위임은 제목만 남아 있습니다.
+
+```js
+const nav = getNode('.navigation');
+nav.addEventListener('click', e => {
+  const target = e.target.closest('li');
+  if (!target || !nav.contains(target)) return;
+  console.log(target.dataset.name);
+});
+```
+
+위 예제는 부모 내부 항목인지 확인하는 조건도 포함합니다. 원본은 `home`, `about`, `contact`별 메시지를 출력하며 링크 기본 동작은 막지 않습니다. 현재 링크가 모두 `/`이므로 클릭하면 페이지가 이동하거나 다시 로드될 수 있습니다.
+
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: DOM 08. 버블링과 캡처링](#dom-08-버블링과-캡처링) · [다음: 공통 유틸 함수 →](#공통-유틸-함수)
+
+---
+
+## 공통 유틸 함수
+
+유틸은 ES 모듈의 `export/import` 대신 일반 스크립트에서 함수 이름을 공유합니다. 사용하는 학습 파일보다 먼저 연결해야 합니다.
+
+| 파일 | 함수와 동작 |
+| --- | --- |
+| [type.js](client/lib/utils/type.js) | `typeOf`, `isObject`, `isArray`, `isBoolean`, `isString`, `isNumber`, `isBigInt`, `isNull`, `isUndefined`, `isFunction`, `isMath`로 타입 확인 |
+| [getNode.js](client/lib/dom/getNode.js) | `getNode(selector, context)`는 첫 요소 또는 `null`, `getNodes(selector, context)`는 `NodeList` 반환 |
+| [attr.js](client/lib/dom/attr.js) | `getAttr`, `setAttr`, `attr`, `_attr`로 속성 조회·설정 |
+| [insert.js](client/lib/dom/insert.js) | `insertBefore`, `insertFirst`, `insertLast`, `insertAfter`로 HTML 문자열 삽입 |
+| [css.js](client/lib/dom/css.js) | `addClass`, `removeClass`, `toggleClass`로 클래스 변경 |
+| [debounce.js](client/lib/utils/debounce.js) | 마지막 호출 이후 지연 실행, 이벤트 인수와 `this` 전달 |
+| [throttle.js](client/lib/utils/throttle.js) | 일정 시간 동안 후속 호출 제한, 인수들과 `this` 전달 |
+
+현재 `getNode/getNodes`의 `context`는 기본 `document` 또는 부모의 선택자 문자열을 사용합니다. JSDoc에는 요소도 기재되어 있지만 구현은 `document` 외 컨텍스트를 다시 선택자로 조회하므로 실제 요소 객체 전달은 지원하지 않습니다. 선택자에 맞는 요소가 없을 때 유틸 대부분은 별도 방어 처리를 하지 않습니다.
+
+`setAttr`는 속성 이름이 문자열이 아니면 `TypeError`, 값이 `null` 또는 `undefined`이면 `Error`를 던집니다. 빈 문자열은 속성을 제거합니다. `attr`와 `_attr`는 값이 `undefined`이면 조회, 그 외에는 설정합니다.
+
+`addClass`는 단일 문자열, 쉼표로 구분한 문자열, 배열, 객체의 값 목록을 받습니다. `removeClass`는 단일 클래스만 제거하며 빈 문자열 등 Falsy 값이면 클래스 속성을 통째로 제거합니다. 배열·객체 입력을 지원하는 것은 `addClass`입니다. `toggleClass`는 추가 시 `true`, 제거 시 `false`를 반환합니다.
+
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: DOM 09. 이벤트 위임](#dom-09-이벤트-위임) · [다음: 프로젝트 파일 구성 →](#프로젝트-파일-구성)
+
+---
+
+## 프로젝트 파일 구성
+
+| 경로 | 역할 |
+| --- | --- |
+| [client/index.html](client/index.html) | 실행할 학습 스크립트와 실습용 HTML 연결 |
+| [client/index.js](client/index.js) | 숫자 변수 선언과 `navigator` 출력 예제, 현재 HTML에서는 주석 처리 |
+| [client/style.css](client/style.css) | 경기장·공·이모지 위치와 전파 실습 영역 스타일 |
+| `client/chapter/core/` | 코어 학습 파일 1~37번 |
+| `client/chapter/dom/` | BOM·DOM·이벤트 학습 파일 1~9번 |
+| `client/lib/` | 타입·DOM·이벤트 호출 제한 유틸 |
+| [server/index.js](server/index.js) | `live-server`를 localhost:3000, 루트 `./client`, 브라우저 자동 실행 없이 시작 |
+| [package.json](package.json) | 프로젝트 정보, CommonJS 설정, `dev` 실행 명령, 개발 의존성 |
+| [package-lock.json](package-lock.json) | 설치되는 의존성 버전과 의존 관계 기록 |
+| [eslint.config.mjs](eslint.config.mjs) | JavaScript 권장 규칙, 브라우저·Node 및 일부 공통 함수 전역 이름 설정; 미사용·미할당 변수 규칙 해제 |
+| [jsconfig.json](jsconfig.json) | ES2022·DOM 편집기 지원, ESNext 모듈 및 bundler 해석 설정; `checkJs`와 `strictNullChecks` 해제, `node_modules` 제외 |
+
+개발 의존성은 ESLint(`eslint`, `@eslint/js`, `globals`), `live-server`, `nodemon`, Prettier입니다. 현재 npm 스크립트는 `dev`만 정의되어 있습니다. `jsconfig.json`은 편집기 설정이며 브라우저 스크립트를 변환하거나 빌드하지 않습니다.
+
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 공통 유틸 함수](#공통-유틸-함수) · [다음: 복습 질문 →](#복습-질문)
 
 ---
 
@@ -1394,8 +1780,20 @@ getRandomMinMax(2, 10); // 2 이상 10 미만의 정수
 - 음수에 `Math.floor()`와 `Math.trunc()`를 적용하면 어떻게 다를까?
 - `getRandomMinMax(2, 10)`의 결과에 10이 포함될까?
 - 문자열 추출 메서드는 원본 문자열을 변경할까?
+- `push`, `unshift`, `pop`, `shift`는 원본과 반환값에서 어떻게 다를까?
+- `map`, `find`, `filter`, `reduce`의 반환값은 각각 무엇일까?
+- 커링과 `go`로 배열 변환을 어떤 순서로 연결할까?
+- 키가 없는 경우와 값이 Falsy인 경우는 어떻게 구분할까?
+- 비동기 콜백의 오류는 어디에서 처리해야 할까?
+- `childNodes`와 `children`은 공백과 주석을 어떻게 다룰까?
+- `innerHTML`과 `textContent`는 문자열을 어떻게 처리할까?
+- HTML 속성과 DOM 프로퍼티, `dataset`은 어떤 관계일까?
+- `style`과 `getComputedStyle`에서 읽는 값은 어떻게 다를까?
+- `debounce`와 `throttle`은 연속 호출을 언제 실행할까?
+- `target`과 `currentTarget`, 버블링과 캡처링은 어떻게 다를까?
+- 이벤트 위임에서 `closest('li')`를 사용하는 이유는 무엇일까?
 
-[↑ 목차로 돌아가기](#목차)
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 프로젝트 파일 구성](#프로젝트-파일-구성) · [다음: 실습 실행 방법 →](#실습-실행-방법)
 
 ---
 
@@ -1418,6 +1816,31 @@ npm run dev
 
 학습 파일은 한 번에 하나씩 연결합니다. 함수 선언만 있는 예제는 콘솔에서 직접 호출하고, 주석 처리된 예제는 필요한 부분을 해제하며 결과를 확인합니다.
 
-현재 `client/index.html`에는 타입 확인 유틸 파일과 34번 문자열 파일이 순서대로 연결되어 있습니다. 다른 수업을 실행하려면 두 번째 스크립트 경로를 원하는 학습 파일로 바꿉니다. 23번의 `removeProperty()`처럼 타입 확인 함수를 사용하는 예제는 유틸 파일을 먼저 연결해야 합니다. DOM을 사용하는 실습은 `defer`를 유지합니다. 19번은 `.first`, `.second`, 23번은 최소 두 개의 `span`, 30·31번은 `button` 요소가 필요합니다.
+현재 `client/index.html`에는 `type.js`, `getNode.js`, `attr.js`, `css.js`, `insert.js`가 순서대로 연결되어 있고, GSAP CDN과 DOM 9번 `9.delegation.js`, `style.css`를 사용합니다. 원하는 학습 파일로 마지막 학습 스크립트를 바꿉니다. 23번의 `removeProperty()`처럼 타입 확인 함수를 사용하는 예제는 유틸 파일을 먼저 연결해야 합니다. DOM을 사용하는 실습은 `defer`를 유지합니다.
 
-[↑ 목차로 돌아가기](#목차)
+DOM 7번 실행 시에는 학습 스크립트 앞에 다음 파일도 연결합니다.
+
+```html
+<script src="./lib/utils/debounce.js" defer></script>
+<script src="./lib/utils/throttle.js" defer></script>
+<script src="./chapter/dom/7.event.js" defer></script>
+```
+
+| 실습 | 필요한 HTML·추가 조건 |
+| --- | --- |
+| 코어 19번 | `.first`, `.second` |
+| 코어 23번 | 최소 두 개의 `span` |
+| 코어 30·31번 | `button` |
+| 코어 36번 | 목록을 삽입할 `ul`; 현재는 첫 번째 `ul`인 내비게이션 목록에 삽입 |
+| 코어 37번 | 오류 처리 시 기존 `body` 내용 교체 |
+| DOM 1번 | `#videoElement`, 위치·카메라 권한 |
+| DOM 2번 | `h2`, `.navigation`, 메뉴의 클래스와 `data-name` |
+| DOM 3번 | `.first`, `nav li`, GSAP |
+| DOM 4·6번 | `.first`; DOM 4번은 `.second`도 사용 |
+| DOM 7번 | `.ground`, `.ball` 마크업의 주석 해제, debounce·throttle 유틸 |
+| DOM 8번 | `section > article > p` |
+| DOM 9번 | `.navigation` 내부 `li`와 `data-name` |
+
+`npm run dev`는 5500 포트를 사용합니다. 별도로 `node server/index.js`를 실행하면 3000 포트에서 같은 `client` 폴더를 제공합니다. 실행 예제에는 미완성 항목과 오타도 포함되어 있으므로 각 학습 절의 설명을 함께 확인합니다.
+
+[↑ 빠른 이동](#빠른-이동) · [전체 목차](#목차) · [← 이전: 복습 질문](#복습-질문)

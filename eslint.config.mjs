@@ -17,6 +17,9 @@ const customGlobals = {
   getNode: "readonly",
   getNodes: "readonly",
   attr: "readonly",
+  insertLast: "readonly",
+  debounce: "readonly",
+  throttle: "readonly",
 };
 
 export default defineConfig([
