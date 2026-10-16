@@ -6,26 +6,38 @@
 // - JavaScript의 매우 강력한 특성으로 독립적인 변수를 참조하는 함수를 말합니다.
 //   즉, 클로저에 정의된 함수는 그것이 작성된 환경을 '기억'합니다.
 
-//함수는 태어난 순간 자신이 태어난 환경을 기억합니다.
+// 함수는 태어난 순간 자신이 태어난 환경을 기억합니다.
+
+
 
 function sum(a,b){
   return a + b
 }
 
+
 // const result = sum(1,2);
-const result = sum; // 함수 본문이 들어가게 된다.
+const result = sum;
 
-//currying function
-function first(){
-  let x = 10;
-  let y = 20;
 
-  function second(){
+// currying function 
+function first(x){
+  // let x = 10;
+  // let y = 20;
+
+  function second(y){
     return x + y;
   }
 
-  return second;
+  return second
+
 }
+
+
+const a = first(10);
+
+a(20);
+
+
 
 
 function counter(){
@@ -34,9 +46,7 @@ function counter(){
   function inner (){
     return ++count;
   }
-
   return inner;
-
 }
 
 
@@ -45,30 +55,28 @@ const c2 = counter();
 const c3 = counter();
 
 
-
-/* function multi(x){
-
-  function inner (y){
-    return x * y;
-  }
-
-  return inner;
-
-} */
-
 function multi(x){
 
-  return function(y){
-     x * y;
+  return function (y){
+    return x * y;
   }
-
-
 }
 
-const double = multi(2)
-const triple = multi(3)
+
+
+const double = multi(2);
+const triple = multi(3);
+
 
 const _multi = (x) => (y) => x * y;
+
+
+
+
+
+
+
+
 
 
 

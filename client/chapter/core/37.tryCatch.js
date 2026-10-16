@@ -16,20 +16,57 @@
 
 // try ... catch는 동기적으로 동작하므로 비동기 처리 과정 내부에서 사용해야 함
 
+
+
 try{
-  //value 아니 이렇게 코드를 쓰는 사람이 어디있어..
+
+  // 아니 이렇게 코드 쓰는 사람이 어딨음?
+
   /* 
-  1. 유저 정보를 서ㅓ에서 자져와야 함
-  2. 가져온 유저 접보를 화면에 출력
+  1. 유저 정보를 서버에서 가져와야함
+  2. 가져온 유저 정보를 화면에 출력 
   */
 
-  //유저 정보 가져오기
-  //가져온 정보를 자디고 화면 출력하기
+  // 유저정보 가져오기()
+  // 가져온 정보를 가지고 화면 출력하기()
+
+
 }catch(err){
-  console.error('에러발생');
-  
+
+  console.error('에러 발생!');
+
 }
 
+
+
+
+
+
+
+
+
+
+// 오류 객체(Error Object)
+// - name, message, stack 정보 제공
+
+
+// 직접 오류 객체 생성
+// throw 연산자는 오류 객체를 생성할 때 사용 됨
+// 생성 가능한 오류 객체
+// - Error
+// - TypeError
+// - SyntaxError
+// - ReferenceError
+
+
+// finally 절
+// 오류가 있던, 없던 상관없이 항상 실행
+// try ... catch를 빠져나가는 어떠한 경우에도 항상 실행
+
+
+
+
+// 서버에서부터 전달 받은 데이터 
 
 const data = JSON.stringify({
   "id": 1,
@@ -56,6 +93,8 @@ const data = JSON.stringify({
 })
 
 
+
+
 try{
   
   const user = JSON.parse(data);
@@ -69,24 +108,20 @@ try{
 
   console.dir( message );
 
-  document.body.innerHTML = '404 not found ❌' + message
+  // document.body.innerHTML = '404 not found ❌' + message
   
 }
 
 
-// 오류 객체(Error Object)
-// - name, message, stack 정보 제공
 
 
-// 직접 오류 객체 생성
-// throw 연산자는 오류 객체를 생성할 때 사용 됨
-// 생성 가능한 오류 객체
-// - Error
-// - TypeError
-// - SyntaxError
-// - ReferenceError
 
 
-// finally 절
-// 오류가 있던, 없던 상관없이 항상 실행
-// try ... catch를 빠져나가는 어떠한 경우에도 항상 실행
+
+
+
+
+
+
+
+

@@ -4,6 +4,9 @@
 
 // Array.isArray
 
+
+
+
 const people = [
   {
     id: 0,
@@ -67,34 +70,32 @@ const people = [
 
 // forEach
 
+
 people.forEach((user)=>{
-  console.log(user)
+  // console.log( user );
+  
+  
 })
 
-const tags = people.map((user) => {
-  const { imgSrc, imgAlt, name, age, job } = user;
 
-  const template = `
-    <li>
-      <figure>
-        <img src="${imgSrc}">
-        <figcaption>${imgAlt}</figcaption>
-      </figure>
-      <ul>
-        <li>이름 : ${name}</li>
-        <li>나이 : ${age}</li>
-        <li>직업 : ${job}</li>
-      </ul>
-    </li>
-  `;
+const spans = document.querySelectorAll('span');
 
-  return template;
-}).join('');
+console.log(spans);
 
-document.querySelector('ul').insertAdjacentHTML('beforeend', tags);
 
-//이벤트 바인딩
+spans.forEach((span,index)=>{
+  span.addEventListener('click',function(){
+    
+    this.style.color = 'orange'
+ 
+    
+  })
+})
 
+// 아하! 그럼 중복되는 모든 이벤트 처리는 forEach로 하는구나!! 가 아닙니다.
+// 이벤트 위임 (event delegation)
+
+// 이벤트 바인딩 
 
 
 /* 원형 파괴 ----------------------------- */
@@ -103,22 +104,84 @@ document.querySelector('ul').insertAdjacentHTML('beforeend', tags);
 // pop
 // unshift
 // shift
+
+// toReversed
+const reverse = people.toReversed();
+
+
+function compare(a,b){
+  if (a > b) return 1;
+  if (a == b) return 0;
+  if (a < b) return -1;
+}
+
+
+// toSorted
+// 
+// const sort = people.toSorted(compare)
+
+
+
 // reverse
 // splice
 // sort
 
 /* 새로운 배열 반환 ------------------------ */
 
-// concat
+// concat [...arr,...arr2]
+
 // slice
-// toSorted
-// toReversed
+
+
 // toSpliced
 
-// map⭐⭐ 새로운 배열을 반환
+console.clear();
 
-//현제 나이에서 +2살을 한 새로운 배열을 만들어 주세요.
-const ages = people.map((user,index) => user.age + 2)
+// ⭐️ map ⭐️  새로운 배열을 반환 
+// 사람들의 이름만을 모아놓은 새로운 배열 
+
+const names = people.map((user,index) => `나의 이름은 : ${user.name}`)
+
+
+// 현재 나이에서 전부 +2살을한 새로운 배열을 만들어주세요.
+
+const ages = people.map((user)=>{
+  return user.age + 2
+})
+
+
+const tags = people.map(({imgSrc, imgAlt, name, age, job})=>{
+  
+  // const {imgSrc, imgAlt, name, age, job} = user;
+
+  const template = `
+    <li>
+      <figure>
+        <img src="${imgSrc}">
+        <figcaption>${imgAlt}</figcaption>
+      </figure>  
+      <ul>
+        <li>이름 : ${name}</li>
+        <li>나이 : ${age}</li>
+        <li>직업 : ${job}</li>
+      </ul>
+    </li>
+  `
+  return template;
+
+}).join('');
+
+// tags.forEach()
+
+
+document.querySelector('ul').insertAdjacentHTML('beforeend',tags)
+
+
+
+
+
+
+
 
 /* 요소 포함 여부 확인 ---------------------- */
 
@@ -128,18 +191,26 @@ const ages = people.map((user,index) => user.age + 2)
 
 /* 요소 찾기 ------------------------------ */
 
-// find - 첫번쨰로 나온 항목만 기억을 한다. 하나만 찾는다.
+// find
 
 const az = people.find((user)=>{
   return user.age > 20
 })
+
+
+
+
+
 // findIndex
 
 /* 요소 걸러내기 --------------------------- */
 
+// 새로운 배열을 반환하기 때문에 return은 필수 = map
 
-//새로운 배열을 반환한기 떄문에 return은 필수 = map
-const mz = people.filter(user => user.age > 20)
+const mz = people.filter(user => user.age > 20);
+
+
+
 
 
 // filter
@@ -147,32 +218,39 @@ const mz = people.filter(user => user.age > 20)
 /* 요소별 리듀서(reducer) 실행 -------------- */
 
 // reduce
-const total = people.reduce((acc, cur) => acc + cur.age, 0);
 
-console.log(total);
+const total = people.reduce((acc,cur) => acc + cur.age,0)
 
-const template = people.reduce((htmlCode, user) => {
-  return htmlCode + `<li>${user.name}, ${user.age}, ${user.job}</li>`;
-}, '');
+console.log( total );
 
-document.querySelector('ul').insertAdjacentHTML('beforeend', template);
 
+const template = people.reduce((htmlCode,user)=>{
+  return htmlCode + `<li>${user.name}, ${user.age}, ${user.job}</li>`
+},'')
+
+
+document.querySelector('ul').insertAdjacentHTML('beforeend',template);
 
 // reduceRight
 
 /* string ←→ array 변환 ------------------ */
 
+
+
+const _arr = '안/녕/하/세/요'
+
 // split
+const stringToArray = _arr.split('/');
 
-const _arr = '안/녕/하/세/여'
 
-const stringToArray = _arr.split('/')
 // join
+const arrayToString = stringToArray.join('-');
 
 
 
 
-// forEach  배열을 순환 값을 반환하지 않음
+
+// forEach  배열을 순환 값을 반환하지 않음 
 // map      배열을 순환 값을 반환 (새로운 배열)
 // filter   배열을 순환 값을 반환 (새로운 배열)
 // reduce   배열을 순환 값을 반환 (any)
@@ -181,40 +259,39 @@ const stringToArray = _arr.split('/')
 const product = [
   {name:'냉동 만두', price: 12000, brand:'비비고'},
   {name:'냉동 피자', price: 15000, brand:'오뚜기'},
-  {name:'냉동 새우', price: 13900, brand:'곰곰'},
+  {name:'냉동 새우', price: 13500, brand:'곰곰'},
   {name:'냉동 치킨', price: 11000, brand:'하림'},
 ]
 
 
-/* function forEach(){
+const forEach = (f,i) => {
 
+  for(const a of i){
+    f(a)
+  }
 
 }
 
-forEach((item) => item.price , arr) */
-
-const forEach = (f, i) => {
-  for (const a of i) {
-    f(a);
-  }
-};
-
-forEach((item) => console.log(item.price), product);
+// const forEach = (f,i) => {
+//   for(const a of i) f(a)
+// }
 
 
+forEach((item)=> console.log(item.price) ,product)
 
 
-const map = (f, i) => {
+const map = (f,i) => {
   const arr = [];
 
-  for (const a of i) {
-    arr.push(f(a));
+  for(const a of i){
+    arr.push(f(a))
   }
-
   return arr;
-};
+}
 
-const newDta = map((item) => item.brand, product); // 브랜드의 목록들을 담은 새로운 배열
+
+const newData = map((item)=> item.brand , product) // 브랜드의 목록들을 담은 새로운 배열
+
 
 
 const filter = (f,i) => {
@@ -233,6 +310,7 @@ const newFilter = filter(item => item.price < 12000, product);
 
 const reduce = (arr, f, initialValue) => {
   let acc = initialValue;
+  
   for(const [index, currentValue] of arr.entries()){
     acc = f(acc, currentValue, index, arr);
   }
@@ -324,6 +402,7 @@ go(
 
 // take .........
 // Lazy function
+
 
 
 

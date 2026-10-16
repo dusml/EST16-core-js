@@ -25,25 +25,35 @@ let slice = message.slice(2,-1);
 let subString = message.substring(2,5);
 // let subStr = message.substr;
 
+
 // 문자열 포함 여부 확인
 let indexOf;
 let lastIndexOf;
 
-function checkBrowser() {
+
+
+function checkBrowser(){
   const agent = navigator.userAgent.toLowerCase();
-  let browserName;
+  let browserName; 
 
-  switch (true) {
-  case agent.indexOf('edg') > -1: browserName = 'MS Edge'; break;
-  case agent.indexOf('chrome') > -1 && !!window.chrome: browserName = 'Chrome'; break;
-  case agent.indexOf('safari') > -1: browserName = 'Safari'; break;
-  case agent.indexOf('firefox') > -1: browserName = 'Firefox'; break;
-  case agent.indexOf('trident') > -1: browserName = 'MS'; break;
-  default: browserName = '모던 브라우저가 아닙니다!';
-}
-
+  switch(true){
+    case agent.indexOf('edg') > -1 : browserName = 'MS Edge'; break; 
+    case agent.indexOf('chrome') > -1 && !!window.chrome : browserName = 'Chrome'; break; 
+    case agent.indexOf('safari') > -1 : browserName = 'Safari'; break; 
+    case agent.indexOf('firefox') > -1 : browserName = 'FireFox'; break; 
+    case agent.indexOf('trident') > -1 : browserName = 'MS'; break;
+    default: browserName = '모던 브라우저가 아닙니다!';
+  }
+  
   return browserName;
+  
 }
+
+
+
+
+
+
 
 
 
@@ -54,9 +64,9 @@ let endsWith = message.endsWith('Less');
 
 
 // 공백 잘라내기
-let trimLeft;
-let trimRight;
-let trim = message.trim(); //글자의사이의 공백은 따로.. 앞과 뒤에  리플레이스 올 리플레이스의 정규식
+// let trimLeft;
+// let trimRight;
+let trim = message.trim();
 
 
 // 텍스트 반복
@@ -66,11 +76,6 @@ let repeat = message.repeat(3);
 // 대소문자 변환
 let toLowerCase;
 let toUpperCase;
-
-
-// 텍스트 이름 변환 유틸리티 함수
-// let toCamelCase;
-// let toPascalCase;
 
 
 // 텍스트 이름 변환 유틸리티 함수

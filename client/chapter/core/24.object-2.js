@@ -6,6 +6,7 @@
 // 복사(copy) vs. 참조(reference)
 
 let message = '문자 값은 프리미티브 데이터 타입으로 값이 복사됩니다.';
+
 let messenger = {
   name: 'kakao talk',
   manufacture: 'kakao'
@@ -24,27 +25,35 @@ console.log(messenger === conversationTool);
 
 // 객체 복사
 
+
+
+
+
+
 const cloneObject = {}
 
-
 // 1. for ~ in 문을 사용한 복사
-for(const key of messenger){
+for(const key in messenger){
   cloneObject[key] = messenger[key];
 }
+
+
 // 2. Object.assign()을 사용한 복사
-const copyObject = Object.assign({},messenger)
+const copyObject = Object.assign({},messenger);
+
+
 // 3. 전개 연산자(...)를 사용한 복사
-const spreadObject = {...messenger}
+const spreadObject = {...messenger};
 
-const copiedObject = obj => Object.assign({}, obj);
-const _copiedObject = o => ({ ...o });
-
-copiedObject(messenger);
 
 // 4. 객체를 복사해주는 유틸 함수 
+const copiedObject = obj => Object.assign({},obj);
+const _copiedObject = o => ({...o}) ;
 
+copiedObject(messenger)
 
-// 객체 병합(합성)
+// 객체 병합(합성) mixin 
+
 const cssMapA = {
   color: '#4b004b',
   margin: '0 auto',
@@ -58,8 +67,8 @@ const cssMapB = {
   color: '#3f9e97',
 };
 
-let combinedCssMap = Object.assign({},cssMapA, cssMapB );
-//뒤에가 우선순위가 높다. 그레서 뒤에께 오버레이 된다.
+// let combinedCssMap = Object.assign({},cssMapB,cssMapA);
+let combinedCssMap = {...cssMapA,...cssMapB};
 
 
 // 중첩된 프로퍼티에 객체를 포함하는 객체 복사
@@ -75,14 +84,16 @@ const containerStyles = {
   },
 };
 
-
-//깊은 복사
 let copiedContainerStyles = {
   ...containerStyles,
-  ['max-width']: {
+  ['max-width']:{
     ...containerStyles['max-width']
   }
 };
+
+
+
+
 
 
 // 1. 깊은 복사 유틸리티 함수
@@ -98,18 +109,21 @@ function cloneDeep(object) {
   );
 }
 
-const deep = cloneDeep(containerStyles)
 
+const deep = cloneDeep(containerStyles);
 
 
 
 /* 
 
 1. 참조에 의한 객체 복사 (객체나 배열은 기본적으로 참조 복사가 진행됩니다.) 리액트 최악
-2. 얕은 복사 (shallow) Object.assign, ...spread operator
-3. 깊은 복사 (deep) ...spread..., 유틸 함수 
+2. 얕은 복사 (shallow) Object.assign, ...spread operator 
+3. 깊은 복사 (deep) ...spread..., 유틸 함수
 
 */
+
+
+
 
 
 

@@ -11,9 +11,10 @@
 
 
 // 배열 선언
-let friends = '태민 소영 철현 민석 수지 윤지'.split('')
+let friends = '태민 소영 철현 민석 수진 윤지'.split(' ');
 
 // 배열 요소의 총 갯수
+
 friends.length
 
 // 배열 요소 변경
@@ -21,12 +22,14 @@ friends.length
 
 // 배열 요소 추가
 let unshift = friends.unshift('민수');
-//값을 반환하는데 전체의 갯수를 반환한다..-
+
+
 let push = friends.push('유경');
 
 
 // 배열 요소 제거
 let shift = friends.shift();
+
 let pop = friends.pop();
 
 
@@ -40,17 +43,17 @@ let pop = friends.pop();
 
 
 // 배열 복사
-// let copiedArray;
-/* 
-  1. static method
-  2. instance method
-  3. spread syntax 
-*/
 
-let copiedArrayStatic = Array.from[friends];
+
+
+// 1. static method
+let copiedArrayStatic = Array.from(friends);
+
+// 2. instance method
 let copiedArrayInstance = friends.slice();
-let copiedArraySpread = [...friends];
 
+// 3. spread syntax
+let copiedArraySpread = [...friends];
 
 
 
