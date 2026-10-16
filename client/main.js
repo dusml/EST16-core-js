@@ -1,97 +1,85 @@
 
-import {
-  attr,
-  getNode,
-  addClass,
-  insertLast,
-  removeClass,
-  clearContent,
-} from './lib/index.js';
-// 순서는 상관이 없다! ./lib/' 인덱스로 되어 있으면 이렇게만 작성하여도 vscode가 알아서 인덱스를 찾아준다.
+
+// module을 적극적으로 사용하여 만들어주세요
+
+import data from "./data/data.js";
+import { getNode as $, addClass, clearContent, copyClipboard, getRandom, insertLast, removeClass, shake, showAlert } from "./lib/index.js";
 
 
+// 1. 주접 떨기 버튼을 클릭하는 함수
+//      - 주접 떨기 버튼 가져오기
+//      - 클릭 이벤트 연결
 
-// import clearContent from './lib/dom/clearContent.js';
-// import { getNode, getNodes } from './lib/dom/getNode.js';
-// import { insertLast } from "./lib/dom/insert.js";
+// 2. input값 가져오기
+//      - 콘솔에 출력
 
+// 3. data 함수에서 주접 1개를 꺼내기 
+//      - n번째 random 주접을 꺼내기
+//      - Math.random()
 
-// named export   => import { 함수이름/변수이름 as $ } from '경로설정'
-// default export => import 함수이름/변수이름 from '경로설정'
-
-
-
-
-// 1. input 선택하기
-// 2. input 이벤트 바인딩
-//    -addEventListener('input')
-// 3. input value값 가져오기
-// 4. 숫자 더하기
-// 5. result에 출력하기
+// 4. result에 랜더링하기
+//      - insertLast()
 
 
-function phase1(){
+// 5. 예외 처리 
+//      - 이름이 없을 경우 에러 처리 
+//      - 숫자만 들어올 경우 에러 처리 
 
-    const first = getNode('#firstNumber');
-    const second = getNode('#secondNumber');
-    const result = getNode('.result');
-    const clear = getNode('#clear');
+const submit = $('#submit');
+const nameField = $('#nameField');
+const result = $('.result');
 
-    function handleInput(){
-      const firstValue = Number(first.value);
-      const secondValue = +second.value;
-      const total = firstValue + secondValue;
+function handleSubmit(e){
+  e.preventDefault();
 
-      clearContent(result)
-      insertLast(result,total);
-    }
+  const name = nameField.value;
+  const list = data(name);
+  const pick = list[getRandom(list.length)];
+  
+  
+  // console.log(pick);
 
-    function handleClear(e){
-      e.preventDefault();
-      clearContent(first);
-      clearContent(second);
-      clearContent(result);
-      first.focus();
-    }
-
-    first.addEventListener('input',handleInput)
-    second.addEventListener('input',handleInput)
-    clear.addEventListener('click',handleClear)
-}
-
-phase1();
-
-
-
-function phase2(){
-  // const first = getNode('#firstNumber');
-  // const second = getNode('#secondNumber');
-  const calculator = getNode('.calculator');
-  const result = getNode('.result');
-  const clear = getNode('#clear');
-  const numberInputs = [...document.querySelectorAll('input:not(#clear)')];
-
-  function handleInput(){
-    const total = numberInputs.reduce((acc,cur)=> acc + Number(cur.value),0);
+  if(!name || name.replaceAll(' ','') === ''){
     
-    result.textContent = ''
-    insertLast(result,total);
+  
+    showAlert('.alert-error','공백은 허용하지 않습니다.',3000);
 
+    shake(nameField)
+    
+    return;
   }
 
-  function handleClear(e){
-    e.preventDefault();
-    console.log( numberInputs );
-    
-    numberInputs.forEach((elem)=> elem.value = '')
-    result.textContent = '-'
+  if(!isNaN(Number(name))){
+    showAlert('.alert-error','정확한 이름을 입력해 주세요.',3000);
+    shake(nameField);
+    return;
   }
+  
+  clearContent(result);
+  insertLast(result, pick);
+  
 
-
-  calculator.addEventListener('input',handleInput)
-  clear.addEventListener('click',handleClear)
 
 }
+
+function handleCopy(){
+  const text = this.textContent;
+  copyClipboard.then(()=>{
+    showAlert('.alert-success','클립보드 복사 완료!')
+  });
+  //then 후에 시작해줘
+}
+
+submit.addEventListener('click',handleSubmit);
+result.addEventListener('click',handleCopy)
+
+
+
+
+
+
+
+
 
 
 

@@ -1,6 +1,6 @@
-
 import { isObject, isString } from "../utils/type.js";
 import { getNode } from "./getNode.js";
+
 
 /**
  * @function DOM Element에 클래스를 추가하는 함수
@@ -8,7 +8,6 @@ import { getNode } from "./getNode.js";
  * @param {string | string[] | object} className
  * @returns {void}
  */
-
 
 
 export function addClass(node, className){
@@ -35,7 +34,6 @@ export function addClass(node, className){
   
 }
 
-
 /**
  * @function DOM Element에 클래스를 제거하는 함수
  * @param {HTMLElement | string} node
@@ -52,7 +50,6 @@ export function removeClass(node, className){
   }
   node.classList.remove(className);
 }
-
 
 /**
  * @function DOM Element에 클래스를 토글하는 함수
