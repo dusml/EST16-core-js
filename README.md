@@ -1,7 +1,7 @@
 # JavaScript 기초 학습 노트
 
 EST 16기 수업에서 배운 JavaScript의 핵심 개념과 실습 코드를 정리하는 공간입니다.
-변수와 자료형부터 연산자, 조건문, 반복문, 함수, 객체, 상속, 클로저와 숫자·문자열 메서드까지 직접 실행해 보며 동작 원리를 익힙니다.
+변수와 자료형부터 함수, 객체, 상속, 클로저, 배열, 예외 처리, DOM과 이벤트, 비동기 통신까지 직접 실행해 보며 동작 원리를 익힙니다. 현재 메인 화면에서는 사용자 목록 조회·생성·삭제와 학습용 로그인을 실습합니다.
 
 ## 목차
 
@@ -43,6 +43,25 @@ EST 16기 수업에서 배운 JavaScript의 핵심 개념과 실습 코드를 �
 | 32 | [원시값 메서드와 래퍼 객체](#32-원시값-메서드와-래퍼-객체) | 원시값, 자동 래핑, `split` |
 | 33 | [숫자 표현과 Math](#33-숫자-표현과-math) | 숫자 구분자, 지수 표기, 어림수, 난수, 진법 |
 | 34 | [문자열 메서드](#34-문자열-메서드) | 불변성, 추출, 검색, 공백 제거, 반복 |
+| 35 | [배열 기초](#35-배열-기초) | 인덱스, 추가·삭제, 얕은 복사, 다차원 배열 |
+| 36 | [배열 메서드와 함수 조합](#36-배열-메서드와-함수-조합) | map, filter, reduce, 커링, go |
+| 37 | [예외 처리](#37-예외-처리) | try, catch, throw, finally, JSON |
+
+DOM 학습 파일은 별도의 1~9번 순서로 구성되어 있습니다.
+
+| 순서 | 학습 주제 | 핵심 키워드 |
+| --- | --- | --- |
+| DOM 01 | [브라우저 객체 모델](#dom-01-브라우저-객체-모델) | window, location, navigator, history |
+| DOM 02 | [DOM 탐색](#dom-02-dom-탐색) | 노드 탐색, querySelector, closest |
+| DOM 03 | [노드 클래스와 콘텐츠](#dom-03-노드-클래스와-콘텐츠) | 상속, nodeType, textContent, hidden |
+| DOM 04 | [속성과 프로퍼티](#dom-04-속성과-프로퍼티) | attribute, property, dataset |
+| DOM 05 | [노드 생성과 삽입](#dom-05-노드-생성과-삽입) | createElement, append, insertAdjacentHTML |
+| DOM 06 | [클래스와 스타일](#dom-06-클래스와-스타일) | classList, style, getComputedStyle |
+| DOM 07 | [이벤트 처리](#dom-07-이벤트-처리) | addEventListener, 좌표, throttle |
+| DOM 08 | [버블링과 캡처링](#dom-08-버블링과-캡처링) | target, currentTarget, 전파 |
+| DOM 09 | [이벤트 위임](#dom-09-이벤트-위임) | closest, dataset, preventDefault |
+
+[비동기 처리와 HTTP 통신](#비동기-처리와-http-통신) · [사용자 목록과 로그인 실습](#사용자-목록과-로그인-실습) · [공통 유틸리티](#공통-유틸리티) · [프로젝트 구조](#프로젝트-구조)
 
 [키워드로 찾아보기](#키워드로-찾아보기) · [복습 질문](#복습-질문) · [실습 실행 방법](#실습-실행-방법)
 
@@ -125,7 +144,7 @@ const OUR_PLANET_NAME = 'earth';
 
 ## 03. 엄격 모드
 
-학습 파일: [3.stricMode.js](client/chapter/core/3.stricMode.js)
+학습 파일: [3.strictMode.js](client/chapter/core/3.strictMode.js)
 
 - `'use strict'`는 엄격 모드를 적용합니다.
 - 선언하지 않은 변수에 값을 할당하는 등의 실수를 오류로 확인할 수 있습니다.
@@ -155,7 +174,7 @@ let message = 'hello';
 
 ## 05. var와 스코프
 
-학습 파일: [5.legacVar.js](client/chapter/core/5.legacVar.js)
+학습 파일: [5.legacyVar.js](client/chapter/core/5.legacyVar.js)
 
 - `var`는 함수 스코프를 가지며, 함수 밖에서는 전역 스코프를 가집니다.
 - 블록만으로는 범위가 제한되지 않습니다. 블록 스코프를 가지는 `let`, `const`와 비교합니다.
@@ -223,7 +242,7 @@ parseFloat('120.5px');  // 120.5
 
 ## 08. 기본 연산자
 
-학습 파일: [8.operation1.js](client/chapter/core/8.operation1.js)
+학습 파일: [8.operations-1.js](client/chapter/core/8.operations-1.js)
 
 - 산술 연산자: `+`, `-`, `*`, `/`, `%`, `**`
 - 증감 연산자: `++`, `--`
@@ -244,7 +263,7 @@ parseFloat('120.5px');  // 120.5
 
 ## 09. 비교 연산자
 
-학습 파일: [9.operation2.js](client/chapter/core/9.operation2.js)
+학습 파일: [9.operations-2.js](client/chapter/core/9.operations-2.js)
 
 - 비교 연산자: `>`, `<`, `>=`, `<=`
 - `==`는 타입 변환이 일어날 수 있는 동등 비교, `===`는 타입 변환 없이 비교하는 엄격한 동등 비교입니다.
@@ -1337,6 +1356,347 @@ getRandomMinMax(2, 10); // 2 이상 10 미만의 정수
 
 ---
 
+## 35. 배열 기초
+
+학습 파일: [35.array-1.js](client/chapter/core/35.array-1.js)
+
+배열은 순서가 있는 값을 담는 객체입니다. 인덱스는 `0`부터 시작하고, `length`로 배열의 길이를 확인합니다.
+
+| 메서드 | 동작 | 반환값 |
+| --- | --- | --- |
+| `push(value)` | 끝에 추가 | 변경된 길이 |
+| `unshift(value)` | 앞에 추가 | 변경된 길이 |
+| `pop()` | 끝에서 제거 | 제거한 값, 빈 배열이면 `undefined` |
+| `shift()` | 앞에서 제거 | 제거한 값, 빈 배열이면 `undefined` |
+
+`push`와 `pop`을 함께 쓰면 스택(LIFO), `push`와 `shift`를 함께 쓰면 큐(FIFO)의 동작을 표현할 수 있습니다.
+
+```js
+const friends = ['태민', '소영', '철현'];
+friends[1] = '민석';
+const copied = [...friends]; // Array.from(friends), friends.slice()도 가능
+copied.push('수진');
+console.log(friends.length); // 3: 복사한 배열의 길이 변경은 원본과 별개
+
+const matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+console.log(matrix[1][1]); // 5
+```
+
+위 복사 방법은 모두 얕은 복사입니다. 배열 안의 객체나 배열까지 새로 만드는 것은 아니므로 중첩된 값은 참조를 공유합니다.
+
+[↑ 목차로 돌아가기](#목차)
+
+---
+
+## 36. 배열 메서드와 함수 조합
+
+학습 파일: [36.array-2.js](client/chapter/core/36.array-2.js)
+
+### 순회·변환·검색·집계
+
+| 목적 | 메서드 | 결과 |
+| --- | --- | --- |
+| 배열 판별 | `Array.isArray(value)` | 불리언 |
+| 각 요소로 작업 수행 | `forEach(callback)` | `undefined` |
+| 각 요소 변환 | `map(callback)` | 변환한 값의 새 배열 |
+| 조건에 맞는 요소 선택 | `filter(callback)` | 조건을 통과한 요소의 새 배열 |
+| 첫 일치 요소 검색 | `find(callback)` / `findIndex(callback)` | 요소 또는 `undefined` / 인덱스 또는 `-1` |
+| 값 포함 여부·위치 확인 | `includes`, `indexOf`, `lastIndexOf` | 불리언 / 인덱스 또는 `-1` |
+| 누적 계산 | `reduce(callback, initialValue)` | 누적 결과 |
+| 문자열과 배열 변환 | 문자열의 `split`, 배열의 `join` | 배열 / 문자열 |
+
+```js
+const people = [{ name: '민지', age: 25 }, { name: '재훈', age: 20 }];
+const names = people.map(user => user.name); // ['민지', '재훈']
+const adults = people.filter(user => user.age > 20);
+const totalAge = people.reduce((sum, user) => sum + user.age, 0); // 45
+```
+
+`map()` 결과를 `join('')`으로 연결하거나 `reduce()`로 HTML 문자열을 누적한 뒤 DOM에 삽입하는 실습이 포함되어 있습니다. 해당 파일은 `<ul>`이 있어야 실행할 수 있고, `<span>`을 추가하면 클릭 이벤트 예제도 확인할 수 있습니다.
+
+### 원본 변경과 새 배열 반환
+
+- `reverse`, `sort`, `splice`는 원본 배열을 변경합니다.
+- `toReversed`, `toSorted`, `toSpliced`는 원본을 보존하고 새 배열을 반환합니다.
+- `concat`, `slice`도 새 배열을 반환하지만 중첩 객체까지 복사하지는 않습니다.
+- 숫자 정렬에는 `values.toSorted((a, b) => a - b)`처럼 비교 함수를 전달합니다.
+
+새 배열을 반환하는 메서드라도 콜백에서 객체 프로퍼티를 직접 수정하면 원본 객체에 영향을 줄 수 있습니다.
+
+### 커링과 go
+
+파일 후반부에서는 `forEach`, `map`, `filter`, `reduce`를 직접 구현하고 `curry`, `curryN`으로 인수를 나누어 전달합니다. `go(value, ...functions)`는 앞 함수의 결과를 다음 함수의 입력으로 전달합니다.
+
+```js
+// 36번 파일에 정의된 product, go, _filter, _map, _reduce 사용
+go(
+  product,
+  _filter(p => p.price >= 13000),
+  _map(p => p.price),
+  _reduce((a, b) => a + b, 0),
+  console.log
+); // 28500
+```
+
+`pipe`, `flat`, `flatMap`, 지연 평가는 파일에서 후속 주제로 언급되어 있으며 구현된 실습은 아닙니다.
+
+[↑ 목차로 돌아가기](#목차)
+
+---
+
+## 37. 예외 처리
+
+학습 파일: [37.tryCatch.js](client/chapter/core/37.tryCatch.js)
+
+- `try`에서 오류가 발생하면 남은 코드를 건너뛰고 `catch`로 이동합니다.
+- `new Error(message)` 등으로 오류 객체를 만들고, `throw`로 던집니다.
+- 오류 객체의 `name`, `message`, `stack`으로 원인을 확인합니다.
+- `finally`는 정상 완료나 예외 여부와 관계없이 정리 작업을 수행합니다.
+- 현재 스크립트 자체를 해석할 수 없게 만드는 문법 오류는 같은 스크립트의 `try...catch`로 처리할 수 없습니다.
+
+```js
+try {
+  const user = JSON.parse('{"name":"소연"}');
+  if (!('email' in user)) {
+    throw new ReferenceError('email 속성이 없습니다.');
+  }
+  console.log(user.email);
+} catch (error) {
+  console.error(error.message);
+} finally {
+  console.log('검사 종료');
+}
+```
+
+`setTimeout` 콜백에서 발생한 오류는 콜백 내부에서 처리해야 합니다. Promise의 실패는 `.catch()`로 처리하거나, `async` 함수의 `try` 안에서 `await`하여 처리합니다.
+
+[↑ 목차로 돌아가기](#목차)
+
+---
+
+## DOM 01. 브라우저 객체 모델
+
+학습 파일: [1.BOM.js](client/chapter/dom/1.BOM.js)
+
+브라우저는 JavaScript 코어에 더해 호스트 환경의 API를 제공합니다. BOM은 문서 자체 외의 브라우저 기능을 다룹니다.
+
+| 객체 | 학습 내용 |
+| --- | --- |
+| `window` | 대화상자, 타이머, 창 크기 |
+| `location` | `href`, `pathname`, `search`, `hash`, `replace`, `reload` |
+| `navigator` | 언어·온라인 상태, 위치 정보, 카메라 스트림 |
+| `screen` | 화면 크기와 방향 |
+| `history` | 뒤로·앞으로 이동, `pushState`, `replaceState` |
+
+`new URLSearchParams(location.search)`로 쿼리 문자열을 읽습니다. 위치·카메라 예제는 브라우저 권한이 필요하고, 카메라 스트림을 연결하려면 `<video id="videoElement" autoplay></video>`가 있어야 합니다. `$0`은 개발자 도구의 선택 요소를 가리키는 편의 기능이므로 일반 스크립트에서 실행하는 `console.log($0)` 줄은 주석 처리합니다.
+
+## DOM 02. DOM 탐색
+
+학습 파일: [2.DOM.js](client/chapter/dom/2.DOM.js)
+
+- `parentNode`, `childNodes`, `nextSibling`은 텍스트·주석을 포함한 노드를 탐색합니다.
+- `parentElement`, `children`, `nextElementSibling`은 요소를 기준으로 탐색합니다.
+- `querySelector`는 첫 요소 또는 `null`, `querySelectorAll`은 정적인 `NodeList`를 반환합니다.
+- `closest`는 자신부터 조상 방향으로 찾고, `matches`는 선택자 일치 여부, `contains`는 포함 여부를 검사합니다.
+
+실습에는 `h2`와 `.navigation`, 내부의 `.about`, `li[data-name="contact"]` 및 목록 구조가 필요합니다. 마지막의 `getNode`, `getNodes`는 공통 유틸리티이므로 모듈에서 가져와야 합니다.
+
+## DOM 03. 노드 클래스와 콘텐츠
+
+학습 파일: [3.nodeClass.js](client/chapter/dom/3.nodeClass.js)
+
+`EventTarget → Node → Element → HTMLElement → HTMLButtonElement`처럼 DOM 클래스는 상속 관계를 이룹니다. 텍스트와 주석은 각각 `Text`, `Comment`로 `Node`를 상속합니다.
+
+- `nodeType`으로 노드 종류를, `nodeName`과 `tagName`으로 이름을 확인합니다.
+- `innerHTML`은 HTML을 해석하고, `textContent`는 텍스트를 읽거나 씁니다. 신뢰할 수 없는 입력은 HTML 문자열로 삽입하지 않습니다.
+- `hidden`으로 표시 여부를 제어합니다. CSS의 `display` 설정에 의해 표시 결과가 달라질 수 있습니다.
+
+`.first` 요소와 `getNode`가 필요하며 마지막 GSAP 애니메이션을 실행하려면 GSAP을 먼저 로드합니다.
+
+## DOM 04. 속성과 프로퍼티
+
+학습 파일: [4.attribute.js](client/chapter/dom/4.attribute.js)
+
+HTML 속성은 문자열이고 DOM 프로퍼티는 객체의 값이므로 불리언 등 다른 타입도 가질 수 있습니다. 모든 속성이 같은 이름의 프로퍼티로 연결되는 것은 아닙니다.
+
+- `hasAttribute`, `getAttribute`, `setAttribute`, `removeAttribute`로 속성을 다룹니다.
+- `attributes`로 속성 목록을 순회합니다.
+- `data-name="hello"`는 `element.dataset.name`으로 읽고 변경합니다.
+
+실습은 `.first`, `.second` 및 `getNode`, `attr`가 필요합니다. 프로젝트의 `attr(node, prop, '')`는 속성을 제거하며, 세 번째 인수를 생략하면 값을 읽습니다.
+
+## DOM 05. 노드 생성과 삽입
+
+학습 파일: [5.manipulation.js](client/chapter/dom/5.manipulation.js)
+
+`createElement`, `createTextNode`로 노드를 만들고 `cloneNode(true)`로 자손까지 복제합니다. `append`, `prepend`, `before`, `after`, `replaceWith`, `remove`로 삽입·교체·삭제합니다.
+
+| `insertAdjacentHTML` 위치 | 삽입되는 곳 |
+| --- | --- |
+| `beforebegin` | 대상 바로 앞 |
+| `afterbegin` | 대상 내부의 맨 앞 |
+| `beforeend` | 대상 내부의 맨 뒤 |
+| `afterend` | 대상 바로 뒤 |
+
+프로젝트의 `insertBefore`, `insertFirst`, `insertLast`, `insertAfter`가 위 위치에 대응합니다. `.second`와 `insertLast`가 필요합니다. 본문 내부에 넣을 때는 `document.body.insertAdjacentHTML('beforeend', template)`를 사용합니다.
+
+## DOM 06. 클래스와 스타일
+
+학습 파일: [6.style.js](client/chapter/dom/6.style.js)
+
+`className`은 전체 클래스 문자열을 다루고 `classList.add/remove/toggle/contains`는 개별 클래스를 다룹니다. `style`은 인라인 스타일을 변경하며 `style.cssText`에 할당하면 기존 인라인 스타일 전체를 대체합니다. 실제 계산된 스타일은 `getComputedStyle(element)`로 읽습니다.
+
+실습에는 `.first`와 `getNode`가 필요합니다. 공통 함수 `addClass`, `removeClass`, `toggleClass`로 반복되는 클래스 조작을 묶을 수 있습니다.
+
+## DOM 07. 이벤트 처리
+
+학습 파일: [7.event.js](client/chapter/dom/7.event.js)
+
+HTML 이벤트 속성, `onclick` 프로퍼티, `addEventListener` 방식을 비교합니다. `addEventListener`는 여러 핸들러를 등록할 수 있고 제거할 때는 등록한 함수와 같은 참조 및 캡처 설정을 사용합니다.
+
+마우스의 `offsetX`, `offsetY`로 공의 위치를 바꾸거나 이모지 요소를 삽입합니다. `.second`, `.ground`, `.ball` 및 `getNode`, `insertLast`, `throttle`이 필요합니다. `throttle`은 연속 이벤트에서 일정 시간 동안 실행 횟수를 제한합니다.
+
+## DOM 08. 버블링과 캡처링
+
+학습 파일: [8.bubble.js](client/chapter/dom/8.bubble.js)
+
+이벤트는 조상에서 대상으로 내려오는 캡처링, 대상 처리, 조상으로 올라가는 버블링 단계를 거칩니다. `addEventListener`의 `{ capture: true }`로 캡처 단계에 등록합니다.
+
+- `event.target`: 이벤트가 시작된 대상
+- `event.currentTarget`: 현재 핸들러가 등록된 대상
+- `stopPropagation()`: 이후 다른 노드로의 전파 중단
+
+`section > article > p` 구조와 `getNode`를 준비합니다. `mouseenter`, `mouseleave`는 버블링하지 않습니다. 화살표 핸들러의 `this`는 요소로 바뀌지 않으므로 `currentTarget`을 사용합니다.
+
+## DOM 09. 이벤트 위임
+
+학습 파일: [9.delegation.js](client/chapter/dom/9.delegation.js)
+
+부모에 하나의 핸들러를 등록하고 자식에서 버블링하는 이벤트를 처리합니다. 나중에 추가된 자식도 처리할 수 있습니다.
+
+```js
+const nav = document.querySelector('.navigation');
+nav.addEventListener('click', event => {
+  const item = event.target.closest('li');
+  if (!item || !nav.contains(item)) return;
+  event.preventDefault();
+  console.log(item.dataset.name);
+});
+```
+
+실습에는 `.navigation` 안의 `li[data-name]`, `form`과 `getNode`가 필요합니다. `preventDefault()`는 링크 이동·폼 제출 같은 기본 동작을 막으며 전파를 중단하는 기능과는 다릅니다.
+
+[↑ 목차로 돌아가기](#목차)
+
+---
+
+## 비동기 처리와 HTTP 통신
+
+관련 파일: [delay.js](client/lib/utils/delay.js), [xhr.js](client/lib/utils/xhr.js), [tiger.js](client/lib/utils/tiger.js)
+
+콜백에서 Promise와 `async/await`로 이어지는 비동기 처리 방식을 학습합니다. `async` 함수는 Promise를 반환하고, `await`는 해당 함수 안에서 Promise가 완료될 때까지 다음 실행을 기다립니다.
+
+- `delayP(1000)`: 1초 뒤 기본 데이터로 이행합니다.
+- `delayP({ timeout: 500, data: '완료' })`: 지연 시간과 결과를 지정합니다.
+- `delayP({ shouldRejected: true })`: 실패 처리를 연습합니다.
+- `xhr.js`의 내부 `xhr`은 콜백 예제이며, 외부에서는 export된 `xhrPromise`를 사용합니다.
+- `xhrPromise.get/post/put/delete`는 파싱한 데이터를 반환하는 Promise를 제공합니다.
+- `tiger.get/post/put/delete`는 Fetch 기반이며 `Response`를 반환합니다. 성공 응답에만 파싱한 JSON을 `response.data`로 추가합니다.
+
+```js
+import { tiger } from './lib/index.js';
+
+async function loadUsers(url) {
+  try {
+    const response = await tiger.get(url);
+    if (!response.ok) throw new Error(`요청 실패: ${response.status}`);
+    console.log(response.data);
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+```
+
+`tiger`는 HTTP 오류 상태만으로 Promise를 거부하지 않으므로 `response.ok`를 확인해야 합니다. 네트워크 오류나 JSON 파싱 실패는 예외가 될 수 있습니다. 현재 구현은 성공 응답을 JSON으로 파싱하므로 빈 본문 응답을 사용하는 API에는 별도 처리가 필요합니다. CORS 허용 여부는 서버 응답에서 결정되며 클라이언트 요청에 `Access-Control-Allow-Origin`을 추가하는 것만으로 해결되지 않습니다.
+
+## 사용자 목록과 로그인 실습
+
+관련 파일: [main.js](client/main.js), [login.js](client/login.js), [guard.js](client/guard.js), [auth.js](client/lib/utils/auth.js), [userList.js](client/lib/dom/userList.js)
+
+현재 코드는 `main.js`와 `login.js`에 지정된 MockAPI `/users` 주소를 사용합니다. 환경 변수 설정은 없으며 다른 API로 바꾸려면 두 파일의 `END_POINT`를 함께 수정합니다. 학습용 사용자 데이터의 필드는 `id`, `username`, `email`, `website`, `password`입니다.
+
+| 흐름 | 구현 내용 |
+| --- | --- |
+| 목록 조회 | GET 요청 → 스피너 → 사용자 카드 렌더링과 GSAP 등장 효과 |
+| 사용자 생성 | CREATE 팝업 → 이름·이메일·웹사이트 POST → 목록 다시 조회 |
+| 사용자 삭제 | 부모의 클릭 이벤트 위임 → `data-index`에서 ID 추출 → DELETE → 목록 다시 조회 |
+| 로그인 | 이메일·비밀번호를 `URLSearchParams`로 전달해 GET 조회 |
+| 회원가입 | 이메일 중복 조회 → 사용자 POST → 로그인 정보 저장 |
+| 로그인 상태 유지 | `auth-user` 키로 사용자 객체를 localStorage에 JSON 저장 |
+| 진입·로그아웃 | 저장 정보가 없으면 로그인 화면으로 이동, 로그아웃 시 저장 정보 삭제 |
+
+목록 조회·생성·삭제를 구현했으며 수정(PUT)은 통신 유틸리티에만 준비되어 있습니다. 사용자 생성 팝업은 비밀번호를 입력받지 않으므로 회원가입 흐름과 구분합니다.
+
+현재 로그인 화면의 회원가입 폼은 `hidden` 상태이고 탭 전환 이벤트가 구현되어 있지 않습니다. 회원가입을 실습하려면 개발자 도구에서 `.signup-form`의 `hidden` 속성을 제거하고 폼을 제출합니다. 로그인·회원가입은 조회 응답의 `ok`를 기준으로 분기하므로 사용할 API가 빈 결과를 어떤 상태와 본문으로 반환하는지에 따라 결과가 달라질 수 있습니다.
+
+이 로그인은 학습용입니다. 비밀번호를 쿼리 문자열로 전송하고 API 및 localStorage에 사용자 데이터를 그대로 저장합니다. 실제 비밀번호를 입력하지 마세요. `guard.js`는 화면 이동을 제어하는 프론트엔드 코드이며 서버의 인증·접근 제어를 제공하지 않습니다.
+
+## 공통 유틸리티
+
+[client/lib/index.js](client/lib/index.js)는 각 폴더의 export를 모아 제공합니다. 아래 함수는 `import { 함수명 } from './lib/index.js'` 형태로 가져옵니다.
+
+| 분류 | 위치 | 주요 함수·역할 |
+| --- | --- | --- |
+| DOM 조회 | [getNode.js](client/lib/dom/getNode.js) | `getNode`, `getNodes` |
+| 속성·클래스 | [attr.js](client/lib/dom/attr.js), [css.js](client/lib/dom/css.js) | `attr`, `addClass`, `removeClass`, `toggleClass` |
+| 삽입·비우기 | [insert.js](client/lib/dom/insert.js), [clearContent.js](client/lib/dom/clearContent.js) | 위치별 삽입, `clearContent` |
+| 화면 보조 | [showAlert.js](client/lib/dom/showAlert.js), [endScroll.js](client/lib/dom/endScroll.js), [color.js](client/lib/dom/color.js) | 메시지, 스크롤, 카드 색상 |
+| 카드 UI | [userList.js](client/lib/dom/userList.js) | `renderSpinner`, `renderUserCard`, `renderEmptyCard` |
+| 타입 확인 | [type.js](client/lib/utils/type.js) | `typeOf`, `isObject`, `isArray`, `isNumber` 등 |
+| 이벤트 빈도 | [debounce.js](client/lib/utils/debounce.js), [throttle.js](client/lib/utils/throttle.js) | 마지막 입력 후 실행 / 일정 간격으로 실행 제한 |
+| 클립보드 | [copyclipboard.js](client/lib/utils/copyclipboard.js) | `copyClipboard` |
+| 수학 | [math](client/lib/math) | `getRandom`, `toRadian`, `toDegree` |
+| 오류 | [error](client/lib/error) | `typeError`, `syntaxError`, `refError` |
+| 애니메이션 | [shake.js](client/lib/animation/shake.js) | `shake`, GSAP 필요 |
+
+`cube.js`의 `diceAnimation`은 애니메이션 인덱스에서 재내보내기가 주석 처리되어 있습니다. `getNode`는 일치하는 요소가 없으면 `null`을 반환하므로 사용 전에 대상 HTML을 준비합니다. 조회 컨텍스트는 현재 구현에서 `document` 또는 선택자 문자열을 사용하는 방식으로 실습합니다.
+
+## 프로젝트 구조
+
+```text
+EST16-core-js/
+├── README.md
+├── package.json           # npm run dev: localhost:5500
+├── package-lock.json
+├── eslint.config.mjs      # ESLint 설정
+├── .prettierrc.cjs        # 코드 포맷 설정
+├── server/
+│   └── index.js           # 별도 live-server 실행 예제: localhost:3000
+└── client/
+    ├── index.html         # 사용자 목록 화면
+    ├── main.js            # 목록 조회·생성·삭제
+    ├── login.html         # 로그인·회원가입 폼
+    ├── login.js           # 로그인·회원가입 요청
+    ├── guard.js           # 로그인 상태 확인·로그아웃
+    ├── style.css
+    ├── assets/            # 실습 이미지
+    ├── data/              # 예제 데이터
+    ├── chapter/
+    │   ├── core/          # JavaScript 코어 01~37
+    │   └── dom/           # BOM·DOM·이벤트 01~09
+    └── lib/
+        ├── index.js       # 공통 모듈 진입점
+        ├── animation/
+        ├── dom/
+        ├── error/
+        ├── math/
+        └── utils/
+```
+
+[↑ 목차로 돌아가기](#목차)
+
+---
+
 ## 복습 질문
 
 - `let`, `const`, `var`는 재할당과 스코프에서 어떤 차이가 있을까?
@@ -1394,6 +1754,20 @@ getRandomMinMax(2, 10); // 2 이상 10 미만의 정수
 - 음수에 `Math.floor()`와 `Math.trunc()`를 적용하면 어떻게 다를까?
 - `getRandomMinMax(2, 10)`의 결과에 10이 포함될까?
 - 문자열 추출 메서드는 원본 문자열을 변경할까?
+- `push`, `pop`, `shift`, `unshift`의 반환값은 각각 무엇일까?
+- `map`, `filter`, `find`, `reduce`는 결과의 형태가 어떻게 다를까?
+- `sort`와 `toSorted` 중 원본을 변경하는 메서드는 무엇일까?
+- `go`에서 앞 함수의 반환값은 어디에 전달될까?
+- `throw`와 오류 객체 생성은 어떤 차이가 있을까?
+- 타이머 안에서 발생한 예외를 바깥 `try...catch`가 처리할 수 있을까?
+- `childNodes`와 `children`은 어떤 노드를 포함할까?
+- HTML 속성과 DOM 프로퍼티의 값은 항상 같을까?
+- `target`과 `currentTarget`, `preventDefault`와 `stopPropagation`은 어떻게 다를까?
+- 이벤트 위임은 동적으로 추가한 요소도 처리할 수 있을까?
+- `debounce`와 `throttle`은 각각 언제 함수를 실행할까?
+- `xhrPromise`와 `tiger`의 성공 반환값은 어떻게 다를까?
+- Fetch의 HTTP 오류와 네트워크 오류는 어떻게 처리할까?
+- localStorage에 로그인 정보가 있다는 것만으로 서버의 데이터를 보호할 수 있을까?
 
 [↑ 목차로 돌아가기](#목차)
 
@@ -1408,16 +1782,56 @@ npm install
 npm run dev
 ```
 
-브라우저에서 [localhost:5500](http://localhost:5500)에 접속하고 개발자 도구(`F12`)의 **Console** 탭을 엽니다.
-[client/index.html](client/index.html)의 스크립트 경로를 바꿔 원하는 예제를 실행합니다.
+브라우저에서 [localhost:5500](http://localhost:5500)에 접속하고 개발자 도구(`F12`)의 **Console** 탭을 엽니다. 현재는 `guard.js`와 `main.js`가 모듈로 연결되어 있으며, 저장된 로그인 정보가 없으면 [로그인 화면](http://localhost:5500/login.html)으로 이동합니다. API와 GSAP CDN을 사용하는 화면에는 인터넷 연결이 필요합니다.
+
+### 개별 학습 파일 실행
+
+기존 메인 화면을 유지하면서 실습하려면 `client/practice.html`을 별도로 만들고 아래처럼 연결합니다. 이 파일은 실행 방법을 위한 예시이며 저장소에 기본 제공되지는 않습니다.
 
 ```html
-<script src="./lib/utils/type.js" defer></script>
-<script src="./chapter/core/34.string.js" defer></script>
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JavaScript 실습</title>
+    <script src="./chapter/core/34.string.js" defer></script>
+  </head>
+  <body>
+    <button type="button">클릭</button>
+    <span>첫 번째</span><span>두 번째</span>
+    <ul></ul>
+  </body>
+</html>
 ```
 
 학습 파일은 한 번에 하나씩 연결합니다. 함수 선언만 있는 예제는 콘솔에서 직접 호출하고, 주석 처리된 예제는 필요한 부분을 해제하며 결과를 확인합니다.
 
-현재 `client/index.html`에는 타입 확인 유틸 파일과 34번 문자열 파일이 순서대로 연결되어 있습니다. 다른 수업을 실행하려면 두 번째 스크립트 경로를 원하는 학습 파일로 바꿉니다. 23번의 `removeProperty()`처럼 타입 확인 함수를 사용하는 예제는 유틸 파일을 먼저 연결해야 합니다. DOM을 사용하는 실습은 `defer`를 유지합니다. 19번은 `.first`, `.second`, 23번은 최소 두 개의 `span`, 30·31번은 `button` 요소가 필요합니다.
+`http://localhost:5500/practice.html`에서 확인하고 스크립트 경로를 원하는 챕터로 바꿉니다. 19번은 `.first`, `.second`, 23번은 최소 두 개의 `span`, 30·31번은 `button`, 36번은 `ul`이 필요합니다. DOM 챕터의 추가 요소와 유틸리티는 각 절의 안내를 참고합니다.
+
+현재 `lib`의 파일은 `export`를 사용하는 ES 모듈입니다. 타입 확인 유틸리티를 일반 `<script>`로 먼저 연결하는 방식 대신, 필요한 함수를 모듈에서 import합니다. 기존 학습 파일이 `isObject`, `getNode` 같은 이름을 전역으로 참조한다면 실습용 HTML의 기존 스크립트를 다음 모듈로 교체할 수 있습니다.
+
+```html
+<script type="module">
+  import * as lib from './lib/index.js';
+  // 과거 전역 함수 방식으로 작성된 학습 파일을 위한 실습용 연결
+  Object.assign(globalThis, lib);
+  await import('./chapter/core/23.object-1.js');
+</script>
+```
+
+모듈은 자동으로 엄격 모드가 적용되고 최상위 선언의 범위와 `this`가 일반 스크립트와 다릅니다. 엄격 모드·전역 객체 자체를 비교하는 3~5번 예제는 일반 스크립트 방식을 유지합니다. GSAP을 참조하는 예제에는 현재 `index.html`의 GSAP CDN 스크립트도 먼저 추가합니다.
+
+### 실행 중 확인할 점
+
+- 서버 종료: 실행한 터미널에서 `Ctrl+C`를 누릅니다.
+- `5500` 포트가 사용 중이면 기존 서버를 종료하거나 `npx live-server client --host=localhost --port=5501 --no-browser`로 다른 포트를 사용합니다.
+- `node server/index.js`는 별도의 실행 예제이며 `3000` 포트를 사용합니다. `npm run dev`는 해당 파일을 실행하지 않습니다.
+- `Unexpected token 'export'`가 나오면 유틸리티를 일반 스크립트로 연결했는지 확인합니다.
+- `Cannot read properties of null`이 나오면 선택자와 필요한 HTML 요소, 스크립트 실행 시점을 확인합니다.
+- `gsap is not defined`가 나오면 CDN 스크립트의 연결 순서와 네트워크 상태를 확인합니다.
+- API 오류는 Network 탭에서 주소·상태 코드·응답 본문을 확인합니다. 이 프로젝트는 별도의 API 서버를 로컬에서 구동하지 않습니다.
+- 로그인으로 계속 이동하면 Application 탭의 localStorage와 `auth-user` 저장 상태를 확인합니다. 회원가입 폼 표시의 현재 제약은 [로그인 실습](#사용자-목록과-로그인-실습)에 정리했습니다.
+
+`package.json`에는 `dev` 스크립트만 정의되어 있습니다. ESLint와 Prettier 설정은 포함되어 있지만 별도의 `test`, `build`, `lint` 스크립트는 없습니다.
 
 [↑ 목차로 돌아가기](#목차)
